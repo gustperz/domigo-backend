@@ -31,7 +31,7 @@ module.exports = {
       .create(_.omit(req.allParams(), 'id'))
       .then(function (user){
         return {
-          token: JWTService.token.encodeSync({id: user.id}),
+          token: JWTService.token.encode({id: user.id}),
           user: user
         }
       })

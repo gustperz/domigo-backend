@@ -36,7 +36,7 @@ module.exports.routes = {
   '/ping': 'PingController.index',
 
   'post /usuario/token': 'UsuarioController.token',
-  'post /usuario/regiistro': 'UsuarioController.regiistro',
+  'post /usuario/registro': 'UsuarioController.registro',
   // 'get /usuario/refresh_token': 'UsuarioController.refresh_token',
 
 };
