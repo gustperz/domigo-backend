@@ -17,6 +17,8 @@ module.exports = function (error) {
   const statusCode = _.get(error, 'status') || _.get(error, 'oauthError') || 500;
   const config = {code, message, root};
 
+  sails.log(error);
+
   if (statusCode === 401) return res.unauthorized(data, config);
   if (statusCode === 403) return res.forbidden(data, config);
   if (statusCode === 404) return res.notFound(data, config);

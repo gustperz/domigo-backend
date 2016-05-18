@@ -35,4 +35,8 @@ module.exports.routes = {
   'get /apidoc': 'ApiDocController.index',
   '/ping': 'PingController.index',
 
+  'post /usuario/token': 'UsuarioController.token',
+  'post /usuario/regiistro': 'UsuarioController.regiistro',
+  // 'get /usuario/refresh_token': 'UsuarioController.refresh_token',
+
 };
