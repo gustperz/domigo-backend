@@ -24,5 +24,5 @@ module.exports = function (error) {
   if (statusCode === 404) return res.notFound(data, config);
   if (statusCode >= 400 && statusCode < 500) return res.badRequest(data, config);
 
-  return res.serverError(data, config);
+  return res.serverError(error);
 };
