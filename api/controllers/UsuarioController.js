@@ -27,7 +27,7 @@ module.exports = {
    * @param res
    */
   registro(req, res) {
-    Usuario
+    sails.models.usuario
       .create(_.omit(req.allParams(), 'id'))
       .then(function (user){
         return {

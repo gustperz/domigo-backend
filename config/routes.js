@@ -39,4 +39,8 @@ module.exports.routes = {
   'post /usuario/registro': 'UsuarioController.registro',
   // 'get /usuario/refresh_token': 'UsuarioController.refresh_token',
 
+  // 'get /empresas': 'EmpresasController.find',
+  // 'get /empresas/:id': 'EmpresasController.findOne',
+  // 'get /empresas/:id/mensajeros': 'EmpresasController.populate',
+
 };

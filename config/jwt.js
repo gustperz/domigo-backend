@@ -3,7 +3,7 @@
  */
 
 module.exports.jwt = {
-  expiresIn: 60 * 24,
-  secret: 'domigoasd9876',
+  expiresIn: '1d',
+  secret: 'domigo9876',
   algorithm : 'HS256'
 };

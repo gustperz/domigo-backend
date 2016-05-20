@@ -18,7 +18,7 @@ module.exports = (req, res) => {
 
   const populate = req.param('populate') ? req.param('populate').replace(/ /g, '').split(',') : [];
   const Model = actionUtil.parseModel(req);
-  const fields = req.param('fields') ? req.param('fields').replace(/ /g, '').split(',') : Model.default_return;
+  const fields = req.param('fields') ? req.param('fields').replace(/ /g, '').split(',') : Model.default_return || [];
   const where = actionUtil.parseCriteria(req);
   const limit = actionUtil.parseLimit(req);
   const skip = (req.param('page')-1) * limit || actionUtil.parseSkip(req);

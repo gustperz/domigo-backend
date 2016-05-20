@@ -74,8 +74,8 @@ module.exports = {
       required: true,
       defaultsTo: 'activa'
     },
-    central_id: {
-      model: 'centrales'
+    empresa: {
+      model: 'empresas'
     }
   }
 };

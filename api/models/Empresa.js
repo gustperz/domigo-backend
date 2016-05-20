@@ -7,22 +7,13 @@
 
 module.exports = {
   schema: true,
-  identity: 'centrales',
+  identity: 'empresas',
   attributes: {
-    razon_social: {
-      type: 'string',
-      required: true,
-    },
-    nombre_comercial: {
+    nombre: {
       type: 'string',
       required: true
     },
     nit: {
-      type: 'string',
-      unique: true,
-      required: true
-    },
-    numero_personeria_juridica: {
       type: 'string',
       unique: true,
       required: true
@@ -47,9 +38,8 @@ module.exports = {
       type: 'array',
       required: true
     },
-    email:{
-      type: 'string',
-      unique: true,
+    horario:{
+      type: 'array'
     },
     logo:{
       type: 'string',
@@ -60,17 +50,31 @@ module.exports = {
       required: true,
       defaultsTo: 'activa'
     },
-    mensajeros: {
-      collection: 'mensajeros',
-      via: 'central_id'
+    actividad: {
+      model: 'actividadEmpresa',
+      columnName: 'actividad_id'
+    },
+    servicios_ofrecidos: {
+      references: 'servicioEmpresa',
+      on: 'empresa_id'
+    },
+    usuario: {
+      columnName: 'usuario_id',
+      type: 'integer',
+      foreignKey: true,
+      references: 'usuarios',
+      on: 'id'
     }
   },
+
+  autoCreatedAt: true,
+  autoUpdatedAt: true,
+
   default_return: [
-    'razon_social',
-    'nombre_comercial',
-    'nit',
-    'numero_personeria_juridica',
-    'logo',
+    'nombre',
+    'telefonos',
+    'ciudad',
+    'direccion',
     'estado'
   ]
 };
