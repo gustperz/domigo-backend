@@ -8,6 +8,7 @@
 module.exports = {
   schema: true,
   identity: 'empresas',
+  globalId: 'Empresa',
   attributes: {
     nombre: {
       type: 'string',
@@ -52,18 +53,17 @@ module.exports = {
     },
     actividad: {
       model: 'actividadEmpresa',
-      columnName: 'actividad_id'
     },
     servicios_ofrecidos: {
-      references: 'servicioEmpresa',
-      on: 'empresa_id'
+      conllection: 'servicioEmpresa',
+      via: 'empresa'
     },
     usuario: {
-      columnName: 'usuario_id',
-      type: 'integer',
-      foreignKey: true,
-      references: 'usuarios',
-      on: 'id'
+      model: 'usuario',
+    },
+    mensajeros: {
+      collection: 'mensajeros',
+      via: 'empresa'
     }
   },
 
@@ -76,6 +76,13 @@ module.exports = {
     'ciudad',
     'direccion',
     'estado'
-  ]
+  ],
+
+  afterDestroy(destroyedRecords, nex){
+    for (var i = 0; i < destroyedRecords.length; i++) {
+      Usuario.destroy({id: destroyedRecords[i].usuario}).exec(() => {});
+    }
+    nex();
+  }
 };
 

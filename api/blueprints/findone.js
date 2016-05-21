@@ -17,7 +17,11 @@ module.exports = (req, res) => {
 
   const populate = req.param('populate') ? req.param('populate').replace(/ /g, '').split(',') : [];
   const Model = actionUtil.parseModel(req);
-  const fields = req.param('fields') ? req.param('fields').replace(/ /g, '').split(',') : Model.default_return || [];
+  if(req.param('fields')){
+    var fields = req.param('fields') != 'all' ? req.param('fields').replace(/ /g, '').split(',') : [];
+  } else {
+    var fields = Model.default_return || [];
+  }
   const pk = actionUtil.requirePk(req);
   const query = Model.find(pk, fields.length > 0 ? {select: fields} : null);
   const findQuery = _.reduce(_.intersection(populate, takeAliases(Model.associations)), populateAliases, query);

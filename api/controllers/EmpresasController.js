@@ -7,24 +7,24 @@
  */
 
 module.exports = {
-  _config: { actions: false, index: false, rest: true },
 
   create(req, res) {
     var data = req.allParams();
+    Empresa.create(data)
+      .then(res.created)
+      .catch(error =>{
+        if(!error.invalidAttributes.username) {
+          Usuario.destroy({username: data.usuario.username}).exec(() => {});
+        }
+        res.negotiate(error);
+      });
+  },
 
-    const usuario = data.usuario;
-    sails.models.usuario.create(usuario)
-      .then(_usuario => {
-        delete data.usuario;
-        data.usuario_id = _usuario.id;
-        sails.models.empresas.create(data)
-          .then(res.created)
-          .catch(error =>{
-            sails.models.usuario.destroy({id:_usuario.id});
-            res.negotiate(error);
-          });
-      })
-      .catch(res.negotiate);
-  }
+  // poulateMensajeros(req, res) {
+  //   var urlarry = req.url.split('?');
+  //   console.log()
+  //   var url = '/mensajeros?empresa=' + req.params.parentid + (urlarry[1] ? '&'+ urlarry[1] : '');
+  //   return res.redirect(url);
+  // }
 };
 

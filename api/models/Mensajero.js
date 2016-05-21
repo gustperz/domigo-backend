@@ -12,6 +12,7 @@ module.exports = {
     cedula: {
       type: 'string',
       required: true,
+      unique: true
     },
     nombre: {
       type: 'string',
@@ -55,7 +56,8 @@ module.exports = {
     },
     licencia_conducion: {
       type: 'string',
-      required: true
+      required: true,
+      unique: true,
     },
     licencia_tipo: {
       type: 'string',
@@ -77,6 +79,17 @@ module.exports = {
     empresa: {
       model: 'empresas'
     }
-  }
+  },
+
+  autoCreatedAt: true,
+  autoUpdatedAt: true,
+
+  default_return: [
+  'cedula',
+  'nombre',
+  'apellidos',
+  'telefonos',
+  'estado'
+]
 };
 

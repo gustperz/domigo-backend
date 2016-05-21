@@ -12,11 +12,9 @@ module.exports = {
   attributes: {
     empresa: {
       model: 'empresas',
-      columnName: 'empresa_id'
     },
     tipo_servicio: {
       model: 'tipoServicio',
-      columnName: 'tipo_servicio_id'
     },
     valor: {
       type: 'float',

@@ -27,5 +27,6 @@
     "url": "git://github.com/tav0/domigo-backend.git"
   },
   "author": "tav0",
-  "license": ""
+  "license": "",
+  "devDependencies": {}
 }

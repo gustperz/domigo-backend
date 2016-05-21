@@ -39,8 +39,16 @@ module.exports.routes = {
   'post /usuario/registro': 'UsuarioController.registro',
   // 'get /usuario/refresh_token': 'UsuarioController.refresh_token',
 
-  // 'get /empresas': 'EmpresasController.find',
-  // 'get /empresas/:id': 'EmpresasController.findOne',
-  // 'get /empresas/:id/mensajeros': 'EmpresasController.populate',
+  'get    /empresas': 'EmpresasController.find',
+  'post   /empresas': 'EmpresasController.create',
+  'get    /empresas/:id': 'EmpresasController.findOne',
+  'put    /empresas/:id': 'EmpresasController.update',
+  'delete /empresas/:id': 'EmpresasController.destroy',
+  'get    /empresas/:parentid/mensajeros': {controller: 'EmpresasController', action: 'populate', alias: 'mensajeros'},
+  'post   /empresas/:parentid/mensajeros': {controller: 'EmpresasController', action: 'add', alias: 'mensajeros'},
+
+  'get    /mensajeros/:id': 'MensajerosController.findOne',
+  'put    /mensajeros/:id': 'MensajerosController.update',
+  'delete /mensajeros/:id': 'MensajerosController.destroy',
 
 };

@@ -24,17 +24,17 @@ module.exports = {
     email: {
       type: 'email',
       unique: true
-    }
+    },
+
+    toJSON() {
+      var obj = this.toObject();
+      delete obj.password;
+      return obj;
+    },
   },
 
   autoCreatedAt: true,
   autoUpdatedAt: true,
-
-  toJSON() {
-    var obj = this.toObject();
-    delete obj.password;
-    return obj;
-  },
 
   beforeUpdate(values, next) {
     if (false === values.hasOwnProperty('password')) return next();

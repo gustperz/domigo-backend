@@ -27,7 +27,7 @@ module.exports.policies = {
   ***************************************************************************/
 
   '*': [
-    'fieldsModelParam',
+    // 'fieldsModelParam',
     'isAuthenticated'
   ],
 

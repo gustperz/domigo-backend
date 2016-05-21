@@ -5,7 +5,5 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-module.exports = {
-  _config: { actions: true, index: false, rest: true },
-};
+module.exports = {};
 

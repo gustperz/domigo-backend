@@ -52,7 +52,7 @@ const error_user_notfound = {
  * @private
  */
 const _onLocalStrategyAuth = (req, username, password, next) => {
-  sails.models.usuario
+  Usuario
     .findOne({[LOCAL_STRATEGY_CONFIG.usernameField]: username})
     .then(user => {
       if (!user) return next(null, null, error_user_notfound);
@@ -70,7 +70,7 @@ const _onLocalStrategyAuth = (req, username, password, next) => {
  * @private
  */
 const _onJwtStrategyAuth = (req, payload, next) => {
-  sails.models.usuario
+  Usuario
     .findOne({id: payload.id})
     .then(user => {
       if (!user) return next(null, null, error_user_notfound);
