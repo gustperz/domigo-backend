@@ -18,13 +18,6 @@ module.exports = {
         }
         res.negotiate(error);
       });
-  },
-
-  // poulateMensajeros(req, res) {
-  //   var urlarry = req.url.split('?');
-  //   console.log()
-  //   var url = '/mensajeros?empresa=' + req.params.parentid + (urlarry[1] ? '&'+ urlarry[1] : '');
-  //   return res.redirect(url);
-  // }
+  }
 };
 

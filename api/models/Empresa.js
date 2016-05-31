@@ -46,10 +46,18 @@ module.exports = {
       type: 'string',
       required: true
     },
-    estado:{
-      type: 'string',
+    activa:{
+      type: 'boolean',
       required: true,
-      defaultsTo: 'activa'
+      defaultsTo: true
+    },
+    n_mensajeros_activos: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+    n_mensajeros_inactivos: {
+      type: 'integer',
+      defaultsTo: 0
     },
     actividad: {
       model: 'actividadEmpresa',

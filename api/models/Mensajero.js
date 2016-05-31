@@ -8,6 +8,7 @@
 module.exports = {
   schema: true,
   identity: 'mensajeros',
+  globalId: 'Mensajero',
   attributes: {
     cedula: {
       type: 'string',
@@ -71,10 +72,9 @@ module.exports = {
       type: 'date',
       required: true
     },
-    estado: {
-      type: 'string',
-      required: true,
-      defaultsTo: 'activa'
+    activo:{
+      type: 'boolean',
+      defaultsTo: true
     },
     empresa: {
       model: 'empresas'

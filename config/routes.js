@@ -45,10 +45,11 @@ module.exports.routes = {
   'put    /empresas/:id': 'EmpresasController.update',
   'delete /empresas/:id': 'EmpresasController.destroy',
   'get    /empresas/:parentid/mensajeros': {controller: 'EmpresasController', action: 'populate', alias: 'mensajeros'},
-  'post   /empresas/:parentid/mensajeros': {controller: 'EmpresasController', action: 'add', alias: 'mensajeros'},
+  'post   /empresas/:parentid/mensajeros': 'MensajerosController.create',
 
   'get    /mensajeros/:id': 'MensajerosController.findOne',
   'put    /mensajeros/:id': 'MensajerosController.update',
+  'put    /mensajeros/:id/estado': 'MensajerosController.updateEstado',
   'delete /mensajeros/:id': 'MensajerosController.destroy',
 
 };
