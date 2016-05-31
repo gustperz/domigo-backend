@@ -32,19 +32,16 @@ module.exports = {
       required: true
     },
     localizacion:{
-      type: 'json',
-      required: true
+      type: 'json'
     },
     telefonos:{
-      type: 'array',
-      required: true
+      type: 'array'
     },
     horario:{
       type: 'array'
     },
     logo:{
-      type: 'string',
-      required: true
+      type: 'string'
     },
     activa:{
       type: 'boolean',
