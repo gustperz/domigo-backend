@@ -53,7 +53,7 @@ const error_user_notfound = {
  */
 const _onLocalStrategyAuth = (req, username, password, next) => {
   Usuario
-    .findOne({[LOCAL_STRATEGY_CONFIG.usernameField]: username})
+    .findOne({[LOCAL_STRATEGY_CONFIG.usernameField]: username}).populateAll()
     .then(user => {
       if (!user) return next(null, null, error_user_notfound);
       if (!HashService.bcrypt.compareSync(password, user.password)) return next(null, null, error_user_notfound);
@@ -73,6 +73,7 @@ const _onJwtStrategyAuth = (req, payload, next) => {
   Usuario
     .findOne({id: payload.id})
     .then(user => {
+      console.log(user);
       if (!user) return next(null, null, error_user_notfound);
       return next(null, user, {});
     })

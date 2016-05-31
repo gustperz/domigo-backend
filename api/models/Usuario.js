@@ -26,6 +26,10 @@ module.exports = {
       unique: true
     },
 
+    rol: {
+      model: 'rol'
+    },
+
     toJSON() {
       var obj = this.toObject();
       delete obj.password;

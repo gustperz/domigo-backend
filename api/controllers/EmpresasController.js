@@ -13,7 +13,7 @@ module.exports = {
     Empresa.create(data)
       .then(res.created)
       .catch(error =>{
-        if(!error.invalidAttributes.username) {
+        if(!error.invalidAttributes.username && data.usuario.username) {
           Usuario.destroy({username: data.usuario.username}).exec(() => {});
         }
         res.negotiate(error);
