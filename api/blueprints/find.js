@@ -24,23 +24,13 @@ module.exports = (req, res) => {
     var fields = Model.default_return || [];
   }
   const where = actionUtil.parseCriteria(req);
-  const limit = actionUtil.parseLimit(req);
-  const skip = (req.param('page')-1) * limit || actionUtil.parseSkip(req);
   const sort = actionUtil.parseSort(req);
 
-  const query = Model.find(null, fields.length > 0 ? {select: fields} : null).where(where).limit(limit).skip(skip).sort(sort);
+  const query = Model.find(null, fields.length > 0 ? {select: fields} : null).where(where).sort(sort);
   const findQuery = _.reduce(_.intersection(populate, takeAlias(Model.associations)), populateAlias, query); //???
 
   findQuery
-    .then(records => [records, {
-        root: {
-          criteria: where,
-          limit: limit,
-          start: skip+1,
-          end: skip + limit,
-          page: Math.floor(skip / limit)+1
-        }
-    }])
+    .then(records => [records])
     .spread(res.ok)
     .catch(res.negotiate);
 };
