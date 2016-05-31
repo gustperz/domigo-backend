@@ -89,7 +89,7 @@ module.exports = {
   'nombre',
   'apellidos',
   'telefonos',
-  'estado'
+  'activo'
 ]
 };
 

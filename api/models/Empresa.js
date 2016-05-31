@@ -80,7 +80,7 @@ module.exports = {
     'telefonos',
     'ciudad',
     'direccion',
-    'estado'
+    'activa'
   ],
 
   afterDestroy(destroyedRecords, nex){
