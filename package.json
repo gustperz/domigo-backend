@@ -28,5 +28,8 @@
   },
   "author": "tav0",
   "license": "",
-  "devDependencies": {}
+  "devDependencies": {
+    "hoek": "^4.0.0"
+  },
+  "postinstall": "npm install --prefix ./node_modules/sails hoek"
 }
