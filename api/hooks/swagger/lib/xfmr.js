@@ -4,9 +4,9 @@
  * https://github.com/tjwebb/sails-swagger
  */
 
-const hoek = require('sails/node_modules/hoek');
+const hoek = require('hoek');
 const _ = require('lodash');
-const pluralize = require('sails/node_modules/pluralize');
+const pluralize = require('pluralize');
 const Spec = require('./spec');
 
 const singularize = _.partial(pluralize, _, 1);
