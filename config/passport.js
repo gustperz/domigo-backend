@@ -73,7 +73,6 @@ const _onJwtStrategyAuth = (req, payload, next) => {
   Usuario
     .findOne({id: payload.id})
     .then(user => {
-      console.log(user);
       if (!user) return next(null, null, error_user_notfound);
       return next(null, user, {});
     })

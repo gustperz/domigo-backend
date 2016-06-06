@@ -83,11 +83,11 @@ module.exports = {
     'activa'
   ],
 
-  afterDestroy(destroyedRecords, nex){
+  afterDestroy(destroyedRecords, next){
     for (var i = 0; i < destroyedRecords.length; i++) {
       Usuario.destroy({id: destroyedRecords[i].usuario}).exec(() => {});
     }
-    nex();
+    next();
   }
 };
 
