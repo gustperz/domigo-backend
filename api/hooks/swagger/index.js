@@ -6,7 +6,6 @@
 
 const _ = require('sails/node_modules/lodash');
 const xfmr = require('./lib/xfmr');
-const express = require('sails/node_modules/express');
 
 module.exports = sails => {
   return {
