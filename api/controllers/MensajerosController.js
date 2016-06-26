@@ -30,13 +30,14 @@ module.exports = {
     } else {
       var data = {condicion: estado}
     }
+    console.log(data);
     Mensajero
       .update({id: req.params.id}, data)
       .then(records => {
         if (!records[0]) return res.notFound();
         const mensajero = records[0];
         // sails.sockets.broadcast
-        res.ok(mensajero);
+        res.ok();
       }).catch(res.negotiate);
   },
 

@@ -73,7 +73,7 @@ module.exports = {
       required: true
     },
     condicion:{
-      type: 'estring',
+      type: 'string',
       required: true,
       defaultsTo: 'ausente',
       in: ['ausente', 'sancionado', 'activo'],
@@ -85,6 +85,10 @@ module.exports = {
     },
     empresa: {
       model: 'empresas'
+    },
+    solicitudes: {
+      collection: 'domicilios',
+      via: 'mensajero'
     }
   },
 
