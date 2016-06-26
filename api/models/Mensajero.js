@@ -72,9 +72,16 @@ module.exports = {
       type: 'date',
       required: true
     },
-    activo:{
-      type: 'boolean',
-      defaultsTo: true
+    condicion:{
+      type: 'estring',
+      required: true,
+      defaultsTo: 'ausente',
+      in: ['ausente', 'sancionado', 'activo'],
+    },
+    estado:{
+      type: 'integer',
+      required: true,
+      defaultsTo: '1',
     },
     empresa: {
       model: 'empresas'

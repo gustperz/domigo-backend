@@ -49,7 +49,8 @@ module.exports.routes = {
 
   'get    /mensajeros/:id': 'MensajerosController.findOne',
   'put    /mensajeros/:id': 'MensajerosController.update',
-  'put    /mensajeros/:id/estado': 'MensajerosController.updateEstado',
+  'put    /mensajeros/:id/estado': 'MensajerosController.actualize',
+  'put    /mensajeros/:id/condicion': 'MensajerosController.actualize',
   'delete /mensajeros/:id': 'MensajerosController.destroy',
   'post   /mensajeros/:parentid/domicilios': 'MensajerosController.asignarDomocilio',
 
