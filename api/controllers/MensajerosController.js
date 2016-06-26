@@ -24,7 +24,7 @@ module.exports = {
   },
 
   actualize(req, res){
-    const estado = req.allParams().estado;
+    const estado = req.allParams().estado || req.allParams().condicion;
     if (typeof estado == "number") {
       var data = {estado: estado}
     } else {
