@@ -48,11 +48,7 @@ module.exports = {
       required: true,
       defaultsTo: true
     },
-    n_mensajeros_activos: {
-      type: 'integer',
-      defaultsTo: 0
-    },
-    n_mensajeros_inactivos: {
+    n_mensajeros: {
       type: 'integer',
       defaultsTo: 0
     },
