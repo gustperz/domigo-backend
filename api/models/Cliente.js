@@ -29,7 +29,7 @@ module.exports = {
     },
     solicitudes: {
       collection: 'domicilios',
-      via: 'mensajero'
+      via: 'cliente'
     }
   },
 

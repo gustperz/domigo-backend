@@ -10,7 +10,7 @@ module.exports = {
     _config: {actions: false, index: false, rest: false},
 
     newCall: function (req, res) {
-        if (!req.isSocket) {return res.badRequest();}
+        if (!req.isSocket) return res.badRequest();
         sails.sockets.join(req, req.user.empresa.id);
         const telefono = req.allParams().telefono;
         Cliente.findOne({telefono: telefono}).exec((err, cliente) => {

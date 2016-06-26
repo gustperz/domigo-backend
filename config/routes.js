@@ -46,6 +46,7 @@ module.exports.routes = {
   'delete /empresas/:id': 'EmpresasController.destroy',
   'get    /empresas/:parentid/mensajeros': {controller: 'EmpresasController', action: 'populate', alias: 'mensajeros'},
   'post   /empresas/:parentid/mensajeros': 'MensajerosController.create',
+  'getv   /empresas/:parentid/join_ws': 'MensajerosController.joinWS',
 
   'get    /mensajeros/:id': 'MensajerosController.findOne',
   'put    /mensajeros/:id': 'MensajerosController.update',
