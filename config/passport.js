@@ -42,6 +42,12 @@ const error_user_notfound = {
   status: 401
 }
 
+const error_user_not_valid = {
+  code: 'E_USER_NOT_VALID',
+  message: 'User with specified credentials is not valid',
+  status: 401
+}
+
 
 /**
  * Triggers when user authenticates via local strategy
@@ -57,7 +63,17 @@ const _onLocalStrategyAuth = (req, username, password, next) => {
     .then(user => {
       if (!user) return next(null, null, error_user_notfound);
       if (!HashService.bcrypt.compareSync(password, user.password)) return next(null, null, error_user_notfound);
-      return next(null, user, {});
+      if (user.rol.nombre == 'EMPRESA'){
+        Empresa.findOne({usuario: user.id}).exec((err, empresa ) => {
+          if(err || !empresa) return next(null, null, error_user_not_valid);
+          user.empresa = {
+            id: empresa.id
+          };
+          return next(null, user, {});
+        });
+      } else {
+        return next(null, user, {});
+      }
     })
     .catch(next);
 };
@@ -71,10 +87,10 @@ const _onLocalStrategyAuth = (req, username, password, next) => {
  */
 const _onJwtStrategyAuth = (req, payload, next) => {
   Usuario
-    .findOne({id: payload.id})
+    .findOne({id: payload.user.id})
     .then(user => {
       if (!user) return next(null, null, error_user_notfound);
-      return next(null, user, {});
+      return next(null, payload.user, {});
     })
     .catch(next);
 };
@@ -95,8 +111,11 @@ module.exports.passport = {
    */
   onPassportAuth(req, res, error, user, info) {
     if (error || !user) return res.negotiate(error || info);
+    delete user.password;
+    delete user.createdAt;
+    delete user.updatedAt;
     return res.ok({
-      token: JWTService.token.encode({id: user.id}),
+      token: JWTService.token.encode({user: user}),
       user: user
     });
   }
