@@ -43,7 +43,7 @@ module.exports = {
     Mensajero
       .update({id: req.params.id}, data)
       .then(records => {
-        if(!records[0]) return res.notFound();
+        if (!records[0]) return res.notFound();
         const mensajero = records[0];
         Empresa.findOne({id: mensajero.empresa})
           .exec((err, empresa) => {
@@ -65,7 +65,7 @@ module.exports = {
     Mensajero
       .destroy({id: req.params.id})
       .then(records => {
-        if(!records[0]) return res.notFound();
+        if (!records[0]) return res.notFound();
         const mensajero = records[0];
         Empresa.findOne({id: mensajero.empresa})
           .exec((err, empresa) => {
@@ -79,6 +79,13 @@ module.exports = {
           });
         res.ok(mensajero);
       }).catch(res.negotiate);
+  },
+
+  asignarDomocilio(req, res){
+    Domicilio.update(
+      {id: req.allParams().solicitud_id},
+      {mensajero: req.params.parentid, estado: 'asignado'}
+    ).then(res.ok('Domicilio asigando')).catch(res.negotiate(err));
   }
 };
 

@@ -51,5 +51,10 @@ module.exports.routes = {
   'put    /mensajeros/:id': 'MensajerosController.update',
   'put    /mensajeros/:id/estado': 'MensajerosController.updateEstado',
   'delete /mensajeros/:id': 'MensajerosController.destroy',
+  'post   /mensajeros/:parentid/domicilios': 'MensajerosController.asignarDomocilio',
 
+  'post /clientes/new_call': 'ClientesController.newCall',
+  'post /clientes': 'ClientesController.create',
+  'post /clientes/:parentid/solicitudes': {controller: 'ClientesController', action: 'add', alias: 'solicitudes'},
+  'get  /clientes/:parentid/direcciones_frecuentes/:search': 'ClientesController.direccionesFrecuentes',
 };
