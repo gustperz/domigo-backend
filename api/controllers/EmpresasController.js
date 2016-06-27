@@ -11,7 +11,7 @@ module.exports = {
   create(req, res) {
     var data = req.allParams();
     if(!data.usuario) return res.badRequest('informacion de acceso de la empresa no enviada');
-    data.usuario.rol = 2;
+    data.usuario.rol = 'EMPRESA'; //TODO: ojo con este numero
     Empresa.create(data)
       .then(res.created)
       .catch(error =>{

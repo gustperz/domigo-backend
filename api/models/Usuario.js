@@ -27,7 +27,8 @@ module.exports = {
     },
 
     rol: {
-      model: 'rol'
+      type: 'strng',
+      required: true
     },
 
     toJSON() {

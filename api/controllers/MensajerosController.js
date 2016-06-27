@@ -13,6 +13,12 @@ module.exports = {
   create(req, res){
     const data = req.allParams();
     data.empresa = data.parentid;
+    data.usuario = {
+      username: data.cedula,
+      password: data.cedula,
+      rol: 'MENSAJERO',
+      email: req.allParams().email || ''
+    }
     Mensajero
       .create(data)
       .then(newMensajero => {

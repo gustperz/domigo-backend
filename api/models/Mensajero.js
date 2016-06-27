@@ -96,7 +96,10 @@ module.exports = {
     solicitudes: {
       collection: 'domicilios',
       via: 'mensajero'
-    }
+    },
+    usuario: {
+      model: 'usuario',
+    },
   },
 
   autoCreatedAt: true,
