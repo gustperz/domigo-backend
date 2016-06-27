@@ -5,9 +5,9 @@
  * @description :: Server-side logic for managing Centrales
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+//const _ = require('lodash');
 const actionUtil = require('sails/lib/hooks/blueprints/actionUtil');
-
-const _ = require('lodash');
+const uid = require('sails/node_modules/uid-safe')
 
 module.exports = {
 
@@ -53,19 +53,24 @@ module.exports = {
   saveImagen(req, res){
     Mensajero.findOne({id: req.params.id})
       .then((mensajero) => {
-        req.file('fotografia').upload({
-            dirname: sails.config.appPath + '/public/images/mensajeros',
-            saveAs: function (__newFileStream, cb) {
-              cb(null, mensajero.fotografia || __newFileStream);
+        if(mensajero){
+          req.file('fotografia').upload({
+              dirname: sails.config.appPath + '/public/images/mensajeros',
+              saveAs: function (__newFileStream, cb) {
+                cb(null, mensajero.fotografia || uid.sync(18) + mensajero.id +'.'+ _.last(__newFileStream.filename.split('.')));
+              }
+            },
+            (error, uploadedFiles) => {
+              if (error) return res.negotiate(error);
+              console.log(error);
+              const filename = _.last(uploadedFiles[0].fd.split('/'));
+              mensajero.fotografia = filename;
+              mensajero.save((err, s) => res.ok('files upload'));
             }
-          },
-          (error, uploadedFiles) => {
-            if (error) return res.negotiate(error);
-            const filename = _.last(uploadedFiles[0].fd.split('/'));
-            mensajero.fotografia = filename;
-            mensajero.save((err, s) => res.ok('files upload'));
-          }
-        );
+          );
+        } else {
+          return res.notFound('el mensajero no existe');
+        }
       }).catch(res.negotiate);
   },
 
@@ -80,18 +85,26 @@ module.exports = {
     const limit = actionUtil.parseLimit(req);
     const skip = (req.param('page')-1) * limit || actionUtil.parseSkip(req);
     const sort = actionUtil.parseSort(req);
+    const where = {
+      mensajero: req.params.parentid,
+      estado: 'finalizado'
+    };
 
-    Domicilio.find()
-      .where({
-        mensajero: req.params.parentid,
-        estado: 'finalizado'
-      })
-      .limit(limit).skip(skip).sort(sort)
-      .then(records => [records, {
-        root: { limit: limit, start: skip + 1, end: skip + limit, page: Math.floor(skip / limit) + 1 }
-      }])
-      .spread(res.ok)
-      .catch(res.negotiate);
+    Domicilio.count(where).exec((err, total) => {
+      if(err) return res.negotiate(err);
+      Domicilio.find().where(where).limit(limit).skip(skip).sort(sort)
+        .then(records => [records, {
+          root: {
+            limit: limit,
+            total: total,
+            start: skip + 1,
+            end: skip + limit,
+            page: Math.floor(skip / limit) + 1
+          }
+        }])
+        .spread(res.ok)
+        .catch(res.negotiate);
+    });
   }
 };
 
