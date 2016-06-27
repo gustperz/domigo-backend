@@ -86,6 +86,10 @@ module.exports = {
       required: true,
       defaultsTo: '1',
     },
+    enlista_negra:{
+      type: 'boolean',
+      defaultsTo: false,
+    },
     empresa: {
       model: 'empresas'
     },
