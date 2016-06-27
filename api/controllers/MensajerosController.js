@@ -74,13 +74,6 @@ module.exports = {
       }).catch(res.negotiate);
   },
 
-  asignarDomocilio(req, res){
-    Domicilio.update(
-      {id: req.allParams().solicitud_id},
-      {mensajero: req.params.parentid, estado: 'asignado'}
-    ).then(res.ok('Domicilio asigando')).catch(res.negotiate);
-  },
-
   getHistorialDomicilios(req, res){
     const limit = actionUtil.parseLimit(req);
     const skip = (req.param('page')-1) * limit || actionUtil.parseSkip(req);
