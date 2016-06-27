@@ -27,7 +27,7 @@ module.exports = {
     },
 
     rol: {
-      type: 'strng',
+      type: 'string',
       required: true
     },
 
