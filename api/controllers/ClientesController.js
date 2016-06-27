@@ -27,8 +27,9 @@ module.exports = {
     },
 
   direccionesFrecuentes(req, res){
+    console.log('vale verga')
         const direccion = req.param('direccion', 'destino');
-        Domicilios.query({
+        Domicilio.query({
             text: 'select distinct direccion_$1 from domicilios like %$2 and cliente = $3',
             values: [direccion, req.params.search, req.params.parentid,]
         }, (err, result) => {
