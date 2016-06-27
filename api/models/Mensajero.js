@@ -51,6 +51,9 @@ module.exports = {
       type: 'string',
       unique: true,
     },
+    fotografia:{
+      type: 'string'
+    },
     vehiculo: {
       type: 'string',
       required: true

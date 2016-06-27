@@ -53,6 +53,7 @@ module.exports.routes = {
   'put    /mensajeros/:id/estado': 'MensajerosController.actualize',
   'put    /mensajeros/:id/condicion': 'MensajerosController.actualize',
   'delete /mensajeros/:id': 'MensajerosController.destroy',
+  'post   /mensajeros/:id/fotografia': 'MensajerosController.saveImagen',
   'post   /mensajeros/:parentid/domicilios': 'MensajerosController.asignarDomocilio',
 
   'post /clientes/new_call': 'ClientesController.newCall',

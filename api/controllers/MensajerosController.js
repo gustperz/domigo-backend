@@ -6,6 +6,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+const _ = require('lodash');
+
 module.exports = {
 
   create(req, res){
@@ -41,25 +43,24 @@ module.exports = {
       }).catch(res.negotiate);
   },
 
-  // destroy(req, res){
-  //   Mensajero
-  //     .destroy({id: req.params.id})
-  //     .then(records => {
-  //       if (!records[0]) return res.notFound();
-  //       const mensajero = records[0];
-  //       Empresa.findOne({id: mensajero.empresa})
-  //         .exec((err, empresa) => {
-  //           if (mensajero.activo) {
-  //             empresa.n_mensajeros_activos -= 1;
-  //             empresa.save();
-  //           } else {
-  //             empresa.n_mensajeros_inactivos -= 1;
-  //             empresa.save();
-  //           }
-  //         });
-  //       res.ok(mensajero);
-  //     }).catch(res.negotiate);
-  // },
+  saveImagen(req, res){
+    Mensajero.findOne({id: req.params.id})
+      .then((mensajero) => {
+        req.file('imagen').upload({
+            dirname: sails.config.appPath + '/public/images/mensajeros',
+            saveAs: function (__newFileStream, cb) {
+              cb(null, mensajero.fotografia || __newFileStream);
+            }
+          },
+          (error, uploadedFiles) => {
+            if (error) return res.negotiate(error);
+            const filename = _.last(uploadedFiles[0].fd.split('/'));
+            mensajero.fotografia = filename;
+            mensajero.save((err, s) => res.ok('files upload'));
+          }
+        );
+      }).catch(res.negotiate);
+  },
 
   asignarDomocilio(req, res){
     Domicilio.update(
