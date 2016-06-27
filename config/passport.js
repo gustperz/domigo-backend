@@ -59,11 +59,11 @@ const error_user_not_valid = {
  */
 const _onLocalStrategyAuth = (req, username, password, next) => {
   Usuario
-    .findOne({[LOCAL_STRATEGY_CONFIG.usernameField]: username}).populateAll()
+    .findOne({[LOCAL_STRATEGY_CONFIG.usernameField]: username})
     .then(user => {
       if (!user) return next(null, null, error_user_notfound);
       if (!HashService.bcrypt.compareSync(password, user.password)) return next(null, null, error_user_notfound);
-      if (user.rol.nombre == 'EMPRESA'){
+      if (user.rol == 'EMPRESA'){
         Empresa.findOne({usuario: user.id}).exec((err, empresa ) => {
           if(err || !empresa) return next(null, null, error_user_not_valid);
           user.empresa = {
