@@ -5,6 +5,7 @@
  * @description :: Server-side logic for managing Centrales
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+const actionUtil = require('sails/lib/hooks/blueprints/actionUtil');
 
 const _ = require('lodash');
 
@@ -52,7 +53,7 @@ module.exports = {
   saveImagen(req, res){
     Mensajero.findOne({id: req.params.id})
       .then((mensajero) => {
-        req.file('imagen').upload({
+        req.file('fotografia').upload({
             dirname: sails.config.appPath + '/public/images/mensajeros',
             saveAs: function (__newFileStream, cb) {
               cb(null, mensajero.fotografia || __newFileStream);
@@ -73,6 +74,24 @@ module.exports = {
       {id: req.allParams().solicitud_id},
       {mensajero: req.params.parentid, estado: 'asignado'}
     ).then(res.ok('Domicilio asigando')).catch(res.negotiate);
+  },
+
+  getHistorialDomicilios(req, res){
+    const limit = actionUtil.parseLimit(req);
+    const skip = (req.param('page')-1) * limit || actionUtil.parseSkip(req);
+    const sort = actionUtil.parseSort(req);
+
+    Domicilio.find()
+      .where({
+        mensajero: req.params.parentid,
+        estado: 'finalizado'
+      })
+      .limit(limit).skip(skip).sort(sort)
+      .then(records => [records, {
+        root: { limit: limit, start: skip + 1, end: skip + limit, page: Math.floor(skip / limit) + 1 }
+      }])
+      .spread(res.ok)
+      .catch(res.negotiate);
   }
 };
 

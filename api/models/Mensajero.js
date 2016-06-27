@@ -97,6 +97,14 @@ module.exports = {
       collection: 'domicilios',
       via: 'mensajero'
     },
+    n_domicilios_exitosos: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+    n_domicilios_rechazados: {
+      type: 'integer',
+      defaultsTo: 0
+    },
     usuario: {
       model: 'usuario',
     },

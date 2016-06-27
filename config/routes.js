@@ -54,13 +54,14 @@ module.exports.routes = {
   'put    /mensajeros/:id/condicion': 'MensajerosController.actualize',
   'delete /mensajeros/:id': 'MensajerosController.destroy',
   'post   /mensajeros/:id/fotografia': 'MensajerosController.saveImagen',
+  'get    /mensajeros/:parentid/domicilios': 'MensajerosController.getHistorialDomicilios',
   'post   /mensajeros/:parentid/domicilios': 'MensajerosController.asignarDomocilio',
 
   'post /clientes/new_call': 'ClientesController.newCall',
   'post /clientes': 'ClientesController.create',
   'post /clientes/:parentid/solicitudes': {controller: 'ClientesController', action: 'add', alias: 'solicitudes'},
   'get  /clientes/:parentid/direcciones_frecuentes/:search': 'ClientesController.direccionesFrecuentes',
-  
+
   'get    /lista_negra': 'ListaNegraController.find',
   'post   /lista_negra': 'ListaNegraController.create',
   'delete /lista_negra': 'ListaNegraController.destroy',
