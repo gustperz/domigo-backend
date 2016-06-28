@@ -77,8 +77,7 @@ module.exports = {
     },
     condicion:{
       type: 'string',
-      required: true,
-      defaultsTo: 'ausente',
+      defaultsTo: 'activo',
       in: ['ausente', 'sancionado', 'activo'],
     },
     estado:{
