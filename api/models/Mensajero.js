@@ -92,6 +92,9 @@ module.exports = {
     empresa: {
       model: 'empresas'
     },
+    sanciones: {
+      model: 'sancion'
+    },
     solicitudes: {
       collection: 'domicilios',
       via: 'mensajero'

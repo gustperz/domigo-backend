@@ -39,13 +39,16 @@ module.exports = {
     } else {
       var data = {condicion: estado}
     }
-    console.log(data);
+
     Mensajero
       .update({id: req.params.id}, data)
       .then(records => {
         if (!records[0]) return res.notFound();
         const mensajero = records[0];
         // sails.sockets.broadcast
+        if (estado == "sancionado"){
+          Sancion.create({ razon: req.allParams().razon, mensajero: mensajero.id }).exec(()=>{});
+        }
         res.ok();
       }).catch(res.negotiate);
   },
@@ -85,7 +88,7 @@ module.exports = {
 
     Domicilio.count(where).exec((err, total) => {
       if(err) return res.negotiate(err);
-      Domicilio.find().where(where).limit(limit).skip(skip).sort(sort)
+      Domicilio.find(where).limit(limit).skip(skip).sort(sort)
         .then(records => [records, {
           root: {
             limit: limit,
@@ -98,6 +101,14 @@ module.exports = {
         .spread(res.ok)
         .catch(res.negotiate);
     });
+  },
+
+  findUltimaSancion(req, res){
+    Sancion.find({mensajero: req.params.parentid})
+      .sort({fecha: 1}).limit(1).then(results => {
+      return res.ok(results ? results[0] : {});
+    }).catch(res.negotiate);
   }
-};
+
+}
 

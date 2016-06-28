@@ -56,6 +56,9 @@ module.exports.routes = {
   'post   /mensajeros/:id/fotografia': 'MensajerosController.saveImagen',
   'get    /mensajeros/:parentid/domicilios': 'MensajerosController.getHistorialDomicilios',
   'post   /mensajeros/:parentid/domicilios': {controller: 'MensajerosController', action: 'add', alias: 'domicilios'},
+  'post   /mensajeros/:parentid/sancion': {controller: 'MensajerosController', action: 'add', alias: 'sanciones'},
+  'get    /mensajeros/:parentid/sancion': 'MensajerosController.findUltimaSancion',
+  'get    /mensajeros/:parentid/sanciones': {controller: 'MensajerosController', action: 'populate', alias: 'sanciones'},
 
   'post /clientes/new_call': 'ClientesController.newCall',
   'post /clientes': 'ClientesController.create',
