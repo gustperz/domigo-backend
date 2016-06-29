@@ -47,6 +47,11 @@ module.exports.routes = {
   'get    /empresas/:parentid/mensajeros': {controller: 'EmpresasController', action: 'populate', alias: 'mensajeros'},
   'post   /empresas/:parentid/mensajeros': 'MensajerosController.create',
   'get    /empresas/:parentid/join_ws': 'EmpresasController.joinWS',
+  'get    /empresas/:parentid/tipos_servicios': {controller: 'EmpresasController', action: 'populate', alias: 'servicios_ofrecidos'},
+  'post   /empresas/:parentid/tipos_servicios': {controller: 'EmpresasController', action: 'add', alias: 'servicios_ofrecidos'},
+  'get    /empresas/:parentid/conceptos_cobros': {controller: 'EmpresasController', action: 'populate', alias: 'conceptos_cobros'},
+  'post   /empresas/:parentid/conceptos_cobros': {controller: 'EmpresasController', action: 'add', alias: 'conceptos_cobros'},
+
 
   'get    /mensajeros/:id': 'MensajerosController.findOne',
   'put    /mensajeros/:id': 'MensajerosController.update',
@@ -54,7 +59,7 @@ module.exports.routes = {
   'put    /mensajeros/:id/condicion': 'MensajerosController.actualize',
   'delete /mensajeros/:id': 'MensajerosController.destroy',
   'post   /mensajeros/:id/fotografia': 'MensajerosController.saveImagen',
-  'get    /mensajeros/:parentid/pagos': 'MensajerosController.getHistorialDomicilios',
+  'get    /mensajeros/:parentid/pagos': {controller: 'MensajerosController', action: 'populate', alias: 'pagos'},
   'post   /mensajeros/:parentid/pagos': {controller: 'MensajerosController', action: 'add', alias: 'pagos'},
   'post   /mensajeros/:parentid/sancion': {controller: 'MensajerosController', action: 'add', alias: 'sanciones'},
   'get    /mensajeros/:parentid/sancion': 'MensajerosController.findUltimaSancion',
