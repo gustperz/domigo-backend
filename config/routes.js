@@ -66,7 +66,7 @@ module.exports.routes = {
   'get    /mensajeros/:parentid/sanciones': {controller: 'MensajerosController', action: 'populate', alias: 'sanciones'},
 
   'get    /mensajeros/:parentid/domicilios': 'MensajerosController.getHistorialDomicilios',
-  'post   /mensajeros/:parentid/domicilios': {controller: 'MensajerosController', action: 'add', alias: 'domicilios'},
+  'post   /mensajeros/:parentid/domicilios': 'MensajerosController.addDomicilio',
 
   'post /clientes/new_call': 'ClientesController.newCall',
   'post /clientes': 'ClientesController.create',

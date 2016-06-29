@@ -96,7 +96,7 @@ module.exports = {
       collection: 'sancion',
       via: 'mensajero'
     },
-    solicitudes: {
+    domicilios: {
       collection: 'domicilios',
       via: 'mensajero'
     },

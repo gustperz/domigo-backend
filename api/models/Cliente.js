@@ -19,8 +19,7 @@ module.exports = {
       required: true
     },
     barrio: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     telefono: {
       type: 'string',

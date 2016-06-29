@@ -103,6 +103,26 @@ module.exports = {
     });
   },
 
+  addDomicilio(req, res) {
+    const values = req.allParams();
+    values.cliente.direccion || (values.cliente.direccion = values.direccion_origen);
+    Cliente.findOrCreate(values.cliente).exec((err, cliente) => {
+      if(err || !cliente) return res.negotiate(err);
+      Domicilio.create({
+        direccion_origen: values.direccion_origen,
+        direccion_destino: values.direccion_destino,
+        descripcion: values.descripcion,
+        tipo: values.tipo,
+        empresa: values.empresa,
+        mensajero: req.params.parentid,
+        cliente: cliente.id
+      }).exec((err, domicilio) => {
+        if (err) return res.negotiate(err);
+        return res.ok(domicilio);
+      });
+    });
+  },
+
   findUltimaSancion(req, res){
     Sancion.find({mensajero: req.params.parentid})
       .sort({fecha: 1}).limit(1).then(results => {
