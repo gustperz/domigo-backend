@@ -65,9 +65,11 @@ module.exports.routes = {
 
   'post /clientes/new_call': 'ClientesController.newCall',
   'post /clientes': 'ClientesController.create',
-  'get  /clientes/:parentid/direcciones_frecuentes/:search': 'ClientesController.direccionesFrecuentes',
+  'get  /clientes/:parentid/direcciones_frecuentes': 'ClientesController.direccionesFrecuentes',
 
   'get    /lista_negra': 'ListaNegraController.find',
   'post   /lista_negra': 'ListaNegraController.create',
   'delete /lista_negra': 'ListaNegraController.destroy',
+
+  'get    /lista_negra': 'ListaNegraController.find',
 };
