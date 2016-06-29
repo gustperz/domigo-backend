@@ -93,7 +93,8 @@ module.exports = {
       model: 'empresas'
     },
     sanciones: {
-      model: 'sancion'
+      collection: 'sancion',
+      via: 'mensajero'
     },
     solicitudes: {
       collection: 'domicilios',
