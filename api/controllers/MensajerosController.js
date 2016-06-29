@@ -65,7 +65,7 @@ module.exports = {
             },
             (error, uploadedFiles) => {
               if (error) return res.negotiate(error);
-              console.log(error);
+              if(!uploadedFiles[0]) return res.badRequest('ha ocurrido un erro inesperado al almacenar la imagen');
               const filename = _.last(uploadedFiles[0].fd.split('/'));
               mensajero.fotografia = filename;
               mensajero.save((err, s) => res.ok('files upload'));
