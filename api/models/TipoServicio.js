@@ -13,6 +13,9 @@ module.exports = {
     nombre: {
       type: 'string',
       required: true,
+    },
+    empresa: {
+      model: 'empresas'
     }
   }
 };

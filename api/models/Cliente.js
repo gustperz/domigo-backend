@@ -27,6 +27,11 @@ module.exports = {
       required: true,
       unique: true
     },
+    tipo: {
+      type: 'string',
+      required: true,
+      in: ['empresa', 'particular']
+    },
     solicitudes: {
       collection: 'domicilios',
       via: 'cliente'
