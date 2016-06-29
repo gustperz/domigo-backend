@@ -18,9 +18,10 @@ module.exports = {
 
             if(!cliente){
                 cliente = {telefono: telefono}
+            } else {
+              cliente.direccion_origen = cliente.direccion;
+              delete cliente.direccion;
             }
-            console.log(telefono);
-            console.log(cliente);
             sails.sockets.broadcast(req.user.empresa.id, 'newCall', cliente);
             return res.ok();
         });
