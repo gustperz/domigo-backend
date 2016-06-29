@@ -104,7 +104,7 @@ module.exports = {
   },
 
   addDomicilio(req, res) {
-    const values = req.allParams();
+    var values = req.allParams();
     values.cliente.direccion || (values.cliente.direccion = values.direccion_origen);
     Cliente.findOrCreate(values.cliente).exec((err, cliente) => {
       if(err || !cliente) return res.negotiate(err);
