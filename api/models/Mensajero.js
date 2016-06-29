@@ -100,6 +100,10 @@ module.exports = {
       collection: 'domicilios',
       via: 'mensajero'
     },
+    pagos: {
+      collection: 'pagos',
+      via: 'mensajero'
+    },
     n_domicilios_exitosos: {
       type: 'integer',
       defaultsTo: 0
@@ -121,7 +125,8 @@ module.exports = {
   'nombre',
   'apellidos',
   'telefonos',
-  'activo'
+  'estado',
+  'condicion'
 ]
 };
 

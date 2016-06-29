@@ -1,18 +1,16 @@
 /**
- * TipoServicio.js
+ * ConceptoPagoMensajeros.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
-  schema: true,
-  tableName: 'tipos_servicios',
+  tableName: 'concetos_pagos_mensajeros',
 
   attributes: {
     nombre: {
-      type: 'string',
-      required: true,
+      type: 'string'
     },
     empresa: {
       model: 'empresas'

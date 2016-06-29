@@ -59,6 +59,10 @@ module.exports = {
       conllection: 'servicioEmpresa',
       via: 'empresa'
     },
+    conceptos_cobros_: {
+      conllection: 'ConceptoPagoMensajeros',
+      via: 'empresa'
+    },
     usuario: {
       model: 'usuario',
     },
