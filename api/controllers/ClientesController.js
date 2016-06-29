@@ -30,26 +30,13 @@ module.exports = {
 
   direccionesFrecuentes(req, res){
     console.log('vale verga')
-    var direccion = req.param('direccion', 'destino');
-    if(direccion != 'origen' && direccion != 'destino') return res.notFound(direccion+' no es un tipo de direccion');
-    if (direccion == 'origen') {
-      Domicilio.find({
-        direccion_origen: {'startsWith': req.params.search},
-        cliente: req.params.parentid
-      }, {select:['direccion_origen']})
-        .exec((err, result) => {
-          if (err) return res.negotiate(err);
-          return res.ok(result.map(item => item.direccion_origen));
-        })
-    } else {
-      Domicilio.find({
-        direccion_destino: {'startsWith': req.params.search},
-        cliente: req.params.parentid
-      }, {select:['direccion_destino']})
-        .exec((err, result) => {
-          if (err) return res.negotiate(err);
-          return res.ok(result.map(item => item.direccion_destino));
+        const direccion = req.param('direccion', 'destino');
+        Domicilio.query(
+          'select distinct direccion_'+direccion+' from domicilios where cliente = '+req.params.parentid,
+          (err, result) => {
+            if (err) return res.negotiate(err);
+            return res.ok(result.map(item => item.direccion_destino));
         })
     }
-  },
 }
+
