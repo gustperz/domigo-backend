@@ -30,12 +30,12 @@ module.exports = {
 
   direccionesFrecuentes(req, res){
     console.log('vale verga')
-        const direccion = req.param('direccion', 'destino');
+        const direccion = req.param('direccion', 'origen');
         Domicilio.query(
           'select distinct direccion_'+direccion+' from domicilios where cliente = '+req.params.parentid,
           (err, result) => {
             if (err) return res.negotiate(err);
-            return res.ok(result.map(item => item.direccion_destino));
+            return res.ok(result.map(item => item['direccion_'+direccion]));
         })
     }
 }
