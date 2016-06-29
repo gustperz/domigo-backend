@@ -16,13 +16,14 @@ module.exports = {
     Cliente.findOne({telefono: telefono}).exec((err, cliente) => {
       if (err) return res.negotiate(err);
 
+      var solicitud = { cliente: {} };
       if (!cliente) {
-        cliente = {telefono: telefono}
+        solicitud.cliente.telefono = telefono
       } else {
-        cliente.direccion_origen = cliente.direccion;
-        delete cliente.direccion;
+        solicitud.cliente = cliente;
+        solicitud.direccion_origen = cliente.direccion;
       }
-      sails.sockets.broadcast(req.user.empresa.id, 'newCall', cliente);
+      sails.sockets.broadcast(req.user.empresa.id, 'newCall', solicitud);
       return res.ok();
     });
   },

@@ -32,7 +32,8 @@ module.exports = {
     },
     estado: {
       type: 'string',
-      defaultsTo: 'pendiente'
+      defaultsTo: 'asignado',
+      in: ['asignado', 'finalizado']
     },
     tipo: {
       model: 'servicioEmpresa'
@@ -46,6 +47,33 @@ module.exports = {
     mensajero: {
       model: 'mensajeros'
     }
+  },
+
+  beforeCreate(values, next) {
+    values.cliente.direccion || (values.cliente.direccion = values.direccion_origen);
+    Cliente.findOrCreate(values.cliente).exec((err, cliente) => {
+      values = {
+        direccion_origen: values.direccion_origen,
+        direccion_destino: values.direccion_destino,
+        descripcion: values.descripcion,
+        tipo: values.tipo,
+        empresa: values.empresa,
+        mensajero: values.mensajero,
+        cliente: cliente.id
+      }
+      next();
+    });
+  },
+
+  afterCreate(newlyInsertedRecord, next) {
+    Mensajero.findOne({id: newlyInsertedRecord.mensajero})
+      .then(mensajero => {
+        mensajero.etado = 0;
+        mensajero.save(err => {
+          // sails.sockets.broadcast
+          next();
+        })
+      }).catch(res.negotiate);
   }
 };
 

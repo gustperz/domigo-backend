@@ -54,11 +54,14 @@ module.exports.routes = {
   'put    /mensajeros/:id/condicion': 'MensajerosController.actualize',
   'delete /mensajeros/:id': 'MensajerosController.destroy',
   'post   /mensajeros/:id/fotografia': 'MensajerosController.saveImagen',
-  'get    /mensajeros/:parentid/domicilios': 'MensajerosController.getHistorialDomicilios',
-  'post   /mensajeros/:parentid/domicilios': {controller: 'MensajerosController', action: 'add', alias: 'domicilios'},
+  'get    /mensajeros/:parentid/pagos': 'MensajerosController.getHistorialDomicilios',
+  'post   /mensajeros/:parentid/pagos': {controller: 'MensajerosController', action: 'add', alias: 'pagos'},
   'post   /mensajeros/:parentid/sancion': {controller: 'MensajerosController', action: 'add', alias: 'sanciones'},
   'get    /mensajeros/:parentid/sancion': 'MensajerosController.findUltimaSancion',
   'get    /mensajeros/:parentid/sanciones': {controller: 'MensajerosController', action: 'populate', alias: 'sanciones'},
+
+  'get    /mensajeros/:parentid/domicilios': 'MensajerosController.getHistorialDomicilios',
+  'post   /mensajeros/:parentid/domicilios': {controller: 'MensajerosController', action: 'add', alias: 'domicilios'},
 
   'post /clientes/new_call': 'ClientesController.newCall',
   'post /clientes': 'ClientesController.create',
