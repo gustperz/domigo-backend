@@ -20,6 +20,8 @@ module.exports = {
       if (!cliente) {
         solicitud.cliente.telefono = telefono
       } else {
+        delete cliente.createdAt;
+        delete cliente.updatedAt;
         solicitud.cliente = cliente;
         solicitud.direccion_origen = cliente.direccion;
       }
