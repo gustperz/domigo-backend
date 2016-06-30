@@ -88,7 +88,7 @@ module.exports = {
 
     Domicilio.count(where).exec((err, total) => {
       if(err) return res.negotiate(err);
-      Domicilio.find(where).limit(limit).skip(skip).sort(sort)
+      Domicilio.find(where).populate('tipo').limit(limit).skip(skip).sort(sort)
         .then(records => [records, {
           root: {
             limit: limit,
