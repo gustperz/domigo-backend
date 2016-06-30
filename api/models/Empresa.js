@@ -56,11 +56,11 @@ module.exports = {
       model: 'actividadEmpresa',
     },
     servicios_ofrecidos: {
-      conllection: 'servicioEmpresa',
+      collection: 'servicioEmpresa',
       via: 'empresa'
     },
-    conceptos_cobros_: {
-      conllection: 'ConceptoPagoMensajeros',
+    conceptos_cobros: {
+      collection: 'ConceptoPagoMensajeros',
       via: 'empresa'
     },
     usuario: {
