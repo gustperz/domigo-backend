@@ -111,12 +111,13 @@ module.exports = {
   },
 
   addPago(req, res){
+    console.log(req.params);
     Pago.create({
       mensajero: req.params.parentid,
       empresa: req.user.empresa.id,
-      valor: req.params.valor,
-      concepto: req.params.concepto,
-      fecha: req.params.fecha
+      valor: req.allParams().valor,
+      concepto: req.allParams().concepto,
+      fecha: req.allParams().fecha
     }).then(res.ok).catch(res.negotiate);
   }
 
