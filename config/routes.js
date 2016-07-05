@@ -43,6 +43,7 @@ module.exports.routes = {
   'post   /empresas': 'EmpresasController.create',
   'get    /empresas/:id': 'EmpresasController.findOne',
   'put    /empresas/:id': 'EmpresasController.update',
+  'put    /empresas/:id/estado': 'EmpresasController.updateEstado',
   'delete /empresas/:id': 'EmpresasController.destroy',
   'get    /empresas/:parentid/mensajeros': {controller: 'EmpresasController', action: 'populate', alias: 'mensajeros'},
   'post   /empresas/:parentid/mensajeros': 'MensajerosController.create',
@@ -65,16 +66,13 @@ module.exports.routes = {
   'get    /mensajeros/:parentid/sancion': 'MensajerosController.findUltimaSancion',
   'get    /mensajeros/:parentid/sanciones': {controller: 'MensajerosController', action: 'populate', alias: 'sanciones'},
 
-  'get    /mensajeros/:parentid/domicilios': 'MensajerosController.getHistorialDomicilios',
-  'post   /mensajeros/:parentid/domicilios': 'MensajerosController.addDomicilio',
-
   'post /clientes/new_call': 'ClientesController.newCall',
   'post /clientes': 'ClientesController.create',
   'get  /clientes/:parentid/direcciones_frecuentes': 'ClientesController.direccionesFrecuentes',
 
-  'get    /lista_negra': 'ListaNegraController.find',
-  'post   /lista_negra': 'ListaNegraController.create',
-  'delete /lista_negra': 'ListaNegraController.destroy',
+  'post /domicilios': 'DomiciliosController.create',
 
   'get    /lista_negra': 'ListaNegraController.find',
+  'post   /lista_negra': 'ListaNegraController.create',
+  'delete /lista_negra': 'ListaNegraController.destroy'
 };

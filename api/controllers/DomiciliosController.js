@@ -1,0 +1,43 @@
+/**
+ * DomiciliosController
+ *
+ * @description :: Server-side logic for managing Domicilios
+ * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
+ */
+
+module.exports = {
+
+  create(req, res) {
+    var values = req.allParams();
+    values.cliente.direccion || (values.cliente.direccion = values.direccion_origen);
+    Cliente.findOrCreate(values.cliente).exec((err, cliente) => {
+      if(err || !cliente) return res.negotiate(err);
+      Domicilio.create({
+        direccion_origen: values.direccion_origen,
+        direccion_destino: values.direccion_destino,
+        descripcion: values.descripcion,
+        tipo: values.tipo,
+        empresa: values.empresa,
+        mensajero: values.mensajeros[0],
+        cliente: cliente.id
+      }).exec((err, domicilio) => {
+        if (err) return res.negotiate(err);
+        if(values.mensajeros.length > 1){
+          for(var i = 1; i < values.mensajeros.length; i++){
+            Domicilio.create({
+              direccion_origen: values.direccion_origen,
+              direccion_destino: values.direccion_destino,
+              descripcion: values.descripcion,
+              tipo: values.tipo,
+              empresa: values.empresa,
+              mensajero: values.mensajeros[i],
+              cliente: cliente.id
+            }).exec(()=>{});
+          }
+        }
+        return res.ok(domicilio);
+      });
+    });
+  }
+};
+

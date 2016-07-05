@@ -22,6 +22,18 @@ module.exports = {
       });
   },
 
+  updateEstado(req, res){
+    if(!req.allParams().estado){
+      return res.badRequest('y el campo estado?')
+    }
+    Empresa
+      .update({id: req.params.id}, {estado: req.allParams().estado})
+      .then(records => {
+        if (!records[0]) return res.notFound();
+        res.ok();
+      }).catch(res.negotiate);
+  },
+
   joinWS(req, res){
     if (!req.isSocket) return res.badRequest();
     sails.sockets.join(req, req.user.empresa.id);
