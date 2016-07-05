@@ -80,7 +80,7 @@ module.exports = {
   getHistorialDomicilios(req, res){
     const limit = actionUtil.parseLimit(req);
     const skip = (req.param('page')-1) * limit || actionUtil.parseSkip(req);
-    const sort = actionUtil.parseSort(req);
+    const sort = req.param('sort') ? actionUtil.parseSort(req): {fecha_hora_solicitud: 0};
     const where = {
       mensajero: req.params.parentid,
       estado: 'finalizado'
@@ -108,6 +108,16 @@ module.exports = {
       .sort({fecha: 1}).limit(1).then(results => {
       return res.ok(results ? results[0] : {});
     }).catch(res.negotiate);
+  },
+
+  addPago(req, res){
+    Pago.create({
+      mensajero: req.params.parentid,
+      empresa: req.user.empresa.id,
+      valor: req.params.valor,
+      concepto: req.params.concepto,
+      fecha: req.params.fecha
+    }).then(res.ok).catch(res.negotiate);
   }
 
 }

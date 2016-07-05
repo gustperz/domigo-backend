@@ -34,9 +34,46 @@ module.exports = {
       }).catch(res.negotiate);
   },
 
+  getUltimosPagos(req, res){
+    Pago.query(
+      'SELECT SUM(valor) as total FROM pagos t where t.fecha > NOW() - INTERVAL 7 DAY and empresa = '+req.params.parentid,
+      (err, results) => {
+        if(err) return res.negotiate(err);
+        const total_semana = results[0].total;
+        Pago.query(
+          'SELECT SUM(valor) as total FROM pagos t where t.fecha > NOW() - INTERVAL 30 DAY and empresa = '+req.params.parentid,
+          (err, results) => {
+            if(err) return res.negotiate(err);
+            const total_mes = results[0].total;
+            Pago.find({
+              where: {empresa: req.params.parentid},
+              sort: 'fecha DESC',
+              limit: 5
+            }).populate('mensajero').exec((err, pagos) => {
+              if(err) return res.negotiate(err);
+              return res.ok({
+                total_mes: total_mes || 0,
+                total_semana: total_semana || 0,
+                mensajeros: pagos.map(pago => {
+                  return {
+                    id: pago.mensajero.id,
+                    nombre: pago.mensajero.nombre,
+                    apellidos: pago.mensajero.apellidos,
+                    fotografia: pago.mensajero.fotografia,
+                    cedula: pago.mensajero.cedula
+                  }
+                })
+              });
+            });
+          }
+        );
+      }
+    );
+  },
+
   joinWS(req, res){
     if (!req.isSocket) return res.badRequest();
-    sails.sockets.join(req, req.user.empresa.id);
+    sails.sockets.join(req, req.params.parentid);
     return res.ok();
   }
 };

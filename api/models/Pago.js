@@ -24,6 +24,9 @@ module.exports = {
     },
     mensajero: {
       model: 'mensajeros'
+    },
+    empresa: {
+      model: 'empresas'
     }
   }
 };

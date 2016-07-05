@@ -69,6 +69,10 @@ module.exports = {
     mensajeros: {
       collection: 'mensajeros',
       via: 'empresa'
+    },
+    pagos_mensajeros: {
+      collection: 'pagos',
+      via: 'empresa'
     }
   },
 
