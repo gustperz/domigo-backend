@@ -10,6 +10,7 @@ module.exports = {
   create(req, res) {
     var values = req.allParams();
     values.cliente.direccion || (values.cliente.direccion = values.direccion_origen);
+    if(values.mensajeros.length <= 0) res.badRequest('no se ha seleccionado ningun mensajero');
     Cliente.findOrCreate(values.cliente).exec((err, cliente) => {
       if(err || !cliente) return res.negotiate(err);
       Domicilio.create({
