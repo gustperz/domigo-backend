@@ -13,8 +13,9 @@ module.exports = {
     empresa: {
       model: 'empresas',
     },
-    tipo_servicio: {
-      model: 'tipoServicio',
+    nombre: {
+      type: 'string',
+      required: true,
     },
     valor: {
       type: 'float',
