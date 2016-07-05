@@ -48,6 +48,12 @@ const error_user_not_valid = {
   status: 401
 }
 
+const error_user_inactive = {
+  code: 'E_INACTIVE',
+  message: 'User with specified credentials is not valid',
+  status: 401
+}
+
 
 /**
  * Triggers when user authenticates via local strategy
@@ -66,8 +72,10 @@ const _onLocalStrategyAuth = (req, username, password, next) => {
       if (user.rol == 'EMPRESA'){
         Empresa.findOne({usuario: user.id}).exec((err, empresa ) => {
           if(err || !empresa) return next(null, null, error_user_not_valid);
+          if(!empresa.activa)  return next(null, null, error_user_inactive);
           user.empresa = {
-            id: empresa.id
+            id: empresa.id,
+            nombre: empresa.nombre
           };
           return next(null, user, {});
         });

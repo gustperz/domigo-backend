@@ -27,7 +27,7 @@ module.exports = {
       return res.badRequest('y el campo estado?')
     }
     Empresa
-      .update({id: req.params.id}, {estado: req.allParams().estado})
+      .update({id: req.params.id}, {activa: req.allParams().estado})
       .then(records => {
         if (!records[0]) return res.notFound();
         res.ok();

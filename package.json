@@ -15,7 +15,8 @@
     "sails": "~0.12.3",
     "sails-disk": "~0.10.9",
     "sails-mysql": "^0.12.1",
-    "sails-service-hash": "^3.2.1"
+    "sails-service-hash": "^3.2.1",
+    "uid-safe": "^2.1.1"
   },
   "scripts": {
     "debug": "node debug app.js",
