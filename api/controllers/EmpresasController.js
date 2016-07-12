@@ -72,8 +72,22 @@ module.exports = {
   },
 
   getPagos(req, res){
+    const actual = new Date();
+    const fecha_hasta = req.param('fecha_hasta') ? new Date(req.param('fecha_hasta')).toLocaleString() : actual.toLocaleString();
+    if (req.param('fecha_desde')) {
+      var fecha_desde = new Date(req.param('fecha_desde')).toLocaleString();
+    } else {
+      actual.setDate(1);
+      var fecha_desde = actual.toLocaleString();
+    }
     Pago.find({
-      where: {empresa: req.params.parentid},
+      where: {
+        empresa: req.params.parentid,
+        fecha: {
+          '>': fecha_desde.split(' ')[0],
+          '<': fecha_hasta
+        }
+      },
       sort: 'fecha DESC'
     }).populate('mensajero').exec((err, pagos) => {
       if(err) return res.negotiate(err);
