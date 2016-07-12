@@ -71,6 +71,57 @@ module.exports = {
     );
   },
 
+  getPagos(req, res){
+    Pago.find({
+      where: {empresa: req.params.parentid},
+      sort: 'fecha DESC'
+    }).populate('mensajero').exec((err, pagos) => {
+      if(err) return res.negotiate(err);
+      return res.ok(pagos.map(pago => {
+          return {
+            fecha: pago.fecha,
+            valor: pago.valor,
+            concepto: pago.concepto,
+            mensajero: {
+              id: pago.mensajero.id,
+              nombre: pago.mensajero.nombre,
+              apellidos: pago.mensajero.apellidos,
+              fotografia: pago.mensajero.fotografia,
+              cedula: pago.mensajero.cedula
+            }
+          }
+        }));
+    });
+  },
+
+  getDomicilios(req, res){
+    Domicilio.find({
+      where: {empresa: req.params.parentid},
+      sort: 'fecha_hora_solicitud DESC'
+    }).populate('mensajero').populate('cliente').populate('tipo')
+      .exec((err, domicilios) => {
+      if(err) return res.negotiate(err);
+      return res.ok(domicilios.map(domiclio => {
+          return {
+            fecha: domiclio.fecha_hora_solicitud,
+            estado: domiclio.estado,
+            direccion_destino: domiclio.direccion_destino,
+            tipo: domiclio.tipo,
+            mensajero: {
+              id: domiclio.mensajero.id,
+              nombre: domiclio.mensajero.nombre,
+              apellidos: domiclio.mensajero.apellidos,
+            },
+            cliente: {
+              id: domiclio.mensajero.id,
+              nombre: domiclio.mensajero.nombre,
+              tipo: domiclio.mensajero.tipo,
+            }
+          }
+        }));
+    });
+  },
+
   joinWS(req, res){
     if (!req.isSocket) return res.badRequest();
     sails.sockets.join(req, req.params.parentid);

@@ -54,6 +54,8 @@ module.exports.routes = {
   'post   /empresas/:parentid/conceptos_cobros': {controller: 'EmpresasController', action: 'add', alias: 'conceptos_cobros'},
 
   'get    /empresas/:parentid/total_ultimos_pagos': 'EmpresasController.getUltimosPagos',
+  'get    /empresas/:parentid/pagos': 'EmpresasController.getPagos',
+  'get    /empresas/:parentid/domicilios': 'EmpresasController.getDomicilios',
 
   'get    /mensajeros/:id': 'MensajerosController.findOne',
   'put    /mensajeros/:id': 'MensajerosController.update',
