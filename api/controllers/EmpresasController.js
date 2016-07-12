@@ -89,7 +89,7 @@ module.exports = {
         }
       },
       sort: 'fecha DESC'
-    }).populate('mensajero').exec((err, pagos) => {
+    }).populate('mensajero').populate('concepto').exec((err, pagos) => {
       if(err) return res.negotiate(err);
       return res.ok(pagos.map(pago => {
           return {
