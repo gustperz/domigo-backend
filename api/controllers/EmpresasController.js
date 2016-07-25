@@ -124,12 +124,12 @@ module.exports = {
             mensajero: {
               id: domiclio.mensajero.id,
               nombre: domiclio.mensajero.nombre,
-              apellidos: domiclio.mensajero.apellidos,
+              apellidos: domiclio.mensajero.apellidos
             },
             cliente: {
-              id: domiclio.mensajero.id,
-              nombre: domiclio.mensajero.nombre,
-              tipo: domiclio.mensajero.tipo,
+              id: domiclio.cliente.id,
+              nombre: domiclio.cliente.nombre,
+              tipo: domiclio.cliente.tipo
             }
           }
         }));
