@@ -53,6 +53,11 @@ module.exports.routes = {
   'get    /empresas/:parentid/conceptos_cobros': {controller: 'EmpresasController', action: 'populate', alias: 'conceptos_cobros'},
   'post   /empresas/:parentid/conceptos_cobros': {controller: 'EmpresasController', action: 'add', alias: 'conceptos_cobros'},
 
+  'delete /tipos_servicios/:id': 'ServicioEmpresaController.destroy',
+  'put    /tipos_servicios/:id': 'ServicioEmpresaController.update',
+
+  'delete /conceptos_cobros/:id': 'ConceptoPagoMensajerosController.destroy',
+
   'get    /empresas/:parentid/total_ultimos_pagos': 'EmpresasController.getUltimosPagos',
   'get    /empresas/:parentid/pagos': 'EmpresasController.getPagos',
   'get    /empresas/:parentid/domicilios': 'EmpresasController.getDomicilios',
