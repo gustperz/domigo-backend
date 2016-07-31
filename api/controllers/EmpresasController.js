@@ -114,16 +114,19 @@ module.exports = {
             fecha: domiclio.fecha_hora_solicitud,
             estado: domiclio.estado,
             direccion_destino: domiclio.direccion_destino,
+            direccion_orien: domiclio.direccion_orien,
             tipo: domiclio.tipo,
             mensajero: {
               id: domiclio.mensajero.id,
               nombre: domiclio.mensajero.nombre,
-              apellidos: domiclio.mensajero.apellidos
+              apellidos: domiclio.mensajero.apellidos,
+              telefono: domiclio.mensajero.telefono,
             },
             cliente: {
               id: domiclio.cliente.id,
               nombre: domiclio.cliente.nombre,
-              tipo: domiclio.cliente.tipo
+              tipo: domiclio.cliente.tipo,
+              telefono: domiclio.cliente.telefono,
             }
           }
         }));
