@@ -5,6 +5,7 @@
  * @description :: Server-side logic for managing Centrales
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var moment = require('moment');
 
 module.exports = {
 
@@ -72,21 +73,11 @@ module.exports = {
   },
 
   getPagos(req, res){
-    const actual = new Date();
-    const fecha_hasta = req.param('fecha_hasta') ? new Date(req.param('fecha_hasta')).toLocaleString() : actual.toLocaleString();
-    if (req.param('fecha_desde')) {
-      var fecha_desde = new Date(req.param('fecha_desde')).toLocaleString();
-    } else {
-      actual.setDate(1);
-      var fecha_desde = actual.toLocaleString();
-    }
+
     Pago.find({
       where: {
         empresa: req.params.parentid,
-        fecha: {
-          '>': fecha_desde.split(' ')[0],
-          '<': fecha_hasta
-        }
+        fecha: limitFecha(req)
       },
       sort: 'fecha DESC'
     }).populate('mensajero').populate('concepto').exec((err, pagos) => {
@@ -110,7 +101,10 @@ module.exports = {
 
   getDomicilios(req, res){
     Domicilio.find({
-      where: {empresa: req.params.parentid},
+      where: {
+        empresa: req.params.parentid,
+        fecha_hora_entrega: limitFecha(req)
+      },
       sort: 'fecha_hora_solicitud DESC'
     }).populate('mensajero').populate('cliente').populate('tipo')
       .exec((err, domicilios) => {
@@ -141,5 +135,22 @@ module.exports = {
     sails.sockets.join(req, req.params.parentid);
     return res.ok();
   }
+
 };
+
+function limitFecha(req){
+  const actual = moment();
+  const fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')+' 23:59:59') : actual;
+  if (req.param('fecha_desde')) {
+    var fecha_desde = moment(req.param('fecha_desde'));
+  } else {
+    actual.date(1);
+    var fecha_desde = actual;
+  }
+  console.log(fecha_desde.toDate(),'**************');
+  return {
+    '>': fecha_desde.subtract(1, 'd').toDate(),
+    '<': fecha_hasta.add(1, 'd').toDate()
+  }
+}
 
