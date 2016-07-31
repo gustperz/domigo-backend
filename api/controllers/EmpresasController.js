@@ -103,7 +103,7 @@ module.exports = {
     Domicilio.find({
       where: {
         empresa: req.params.parentid,
-        fecha_hora_entrega: limitFecha(req)
+        fecha_hora_solicitud: limitFecha(req)
       },
       sort: 'fecha_hora_solicitud DESC'
     }).populate('mensajero').populate('cliente').populate('tipo')
