@@ -11,8 +11,8 @@ module.exports = {
     var values = req.allParams();
     values.cliente.direccion || (values.cliente.direccion = values.direccion_origen);
     if(values.mensajeros.length <= 0) res.badRequest('no se ha seleccionado ningun mensajero');
-    Cliente.findOrCreate(values.cliente).exec((err, cliente) => {
-      if(err || !cliente) return res.negotiate(err);
+    Cliente.findOne({telefono: values.cliente.telefono}).exec((err, cliente) => {
+      if(err) return res.negotiate(err);
       Domicilio.create({
         direccion_origen: values.direccion_origen,
         direccion_destino: values.direccion_destino,
@@ -20,7 +20,7 @@ module.exports = {
         tipo: values.tipo,
         empresa: values.empresa,
         mensajero: values.mensajeros[0],
-        cliente: cliente.id
+        cliente: cliente ? cliente.id : values.cliente
       }).exec((err, domicilio) => {
         if (err) return res.negotiate(err);
         if(values.mensajeros.length > 1){
@@ -32,7 +32,7 @@ module.exports = {
               tipo: values.tipo,
               empresa: values.empresa,
               mensajero: values.mensajeros[i],
-              cliente: cliente.id
+              cliente: domicilio.cliente.id
             }).exec(()=>{});
           }
         }
