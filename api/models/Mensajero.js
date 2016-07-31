@@ -44,7 +44,7 @@ module.exports = {
       required: true
     },
     telefonos: {
-      type: 'array',
+      type: 'string',
       required: true
     },
     email: {
