@@ -89,15 +89,20 @@ module.exports = {
     Domicilio.count(where).exec((err, total) => {
       if(err) return res.negotiate(err);
       Domicilio.find(where).populate('tipo').limit(limit).skip(skip).sort(sort)
-        .then(records => [records, {
-          root: {
-            limit: limit,
-            total: total,
-            start: skip + 1,
-            end: skip + limit,
-            page: Math.floor(skip / limit) + 1
+        .then(domicilios => {
+          if(domicilios){
+            domicilios.forEach(domicilio => domicilio.tipo = domicilio.tipo.nombre)
           }
-        }])
+          return [domicilios, {
+            root: {
+              limit: limit,
+              total: total,
+              start: skip + 1,
+              end: skip + limit,
+              page: Math.floor(skip / limit) + 1
+            }
+          }]
+        })
         .spread(res.ok)
         .catch(res.negotiate);
     });
