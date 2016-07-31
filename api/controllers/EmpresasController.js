@@ -139,14 +139,13 @@ module.exports = {
 };
 
 function limitFecha(req){
-  const actual = moment();
-  const fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')+' 23:59:59') : actual;
+  var fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')+' 23:59:59') : moment();
   if (req.param('fecha_desde')) {
     var fecha_desde = moment(req.param('fecha_desde'));
   } else {
-    actual.date(1);
-    var fecha_desde = actual;
+    var fecha_desde = moment().date(1);
   }
+  console.log(fecha_hasta.toDate(),'**************');
   console.log(fecha_desde.toDate(),'**************');
   return {
     '>': fecha_desde.subtract(1, 'd').toDate(),
