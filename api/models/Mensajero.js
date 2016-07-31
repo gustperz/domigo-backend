@@ -43,7 +43,7 @@ module.exports = {
       type: 'string',
       required: true
     },
-    telefonos: {
+    telefono: {
       type: 'string',
       required: true
     },
