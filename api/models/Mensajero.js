@@ -75,6 +75,18 @@ module.exports = {
       type: 'date',
       required: true
     },
+    nombre_referencia: {
+      type: 'string',
+      required: true
+    },
+    direccion_referencia: {
+      type: 'string',
+      required: true
+    },
+    telefono_referencia: {
+      type: 'string',
+      required: true
+    },
     condicion:{
       type: 'string',
       defaultsTo: 'activo',
