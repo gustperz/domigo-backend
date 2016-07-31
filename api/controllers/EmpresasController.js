@@ -114,7 +114,7 @@ module.exports = {
             fecha: domiclio.fecha_hora_solicitud,
             estado: domiclio.estado,
             direccion_destino: domiclio.direccion_destino,
-            direccion_orien: domiclio.direccion_orien,
+            direccion_origen: domiclio.direccion_origen,
             tipo: domiclio.tipo,
             mensajero: {
               id: domiclio.mensajero.id,
