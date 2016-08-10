@@ -39,6 +39,12 @@ module.exports = {
             if (err) return res.negotiate(err);
             return res.ok(result.map(item => item['direccion_'+direccion]));
         })
-    }
+    },
+
+  findOneByTelefono(req, res){
+    const telefono = req.allParams().telefono;
+    if(!telefono) return res.badRequest('necesito el telefono');
+    Cliente.findOne({telefono: telefono}).then(res.ok).catch(res.negotiate);
+  }
 }
 

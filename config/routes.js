@@ -79,6 +79,7 @@ module.exports.routes = {
   'post /clientes/new_call': 'ClientesController.newCall',
   'post /clientes': 'ClientesController.create',
   'get  /clientes/:parentid/direcciones_frecuentes': 'ClientesController.direccionesFrecuentes',
+  'get  /clientes': 'ClientesController.findOneByTelefono',
 
   'post /domicilios': 'DomiciliosController.create',
 
