@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing Domicilios
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var moment = require('moment');
 
 module.exports = {
 
@@ -20,7 +21,8 @@ module.exports = {
         tipo: values.tipo,
         empresa: values.empresa,
         mensajero: values.mensajeros[0],
-        cliente: cliente ? cliente.id : values.cliente
+        cliente: cliente ? cliente.id : values.cliente,
+        fecha_hora_solicitud: moment()
       }).exec((err, domicilio) => {
         if (err) return res.negotiate(err);
         if(values.mensajeros.length > 1){
@@ -32,7 +34,8 @@ module.exports = {
               tipo: values.tipo,
               empresa: values.empresa,
               mensajero: values.mensajeros[i],
-              cliente: domicilio.cliente.id
+              cliente: domicilio.cliente.id,
+              fecha_hora_solicitud: moment()
             }).exec(()=>{});
           }
         }
