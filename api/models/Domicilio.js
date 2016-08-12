@@ -50,13 +50,9 @@ module.exports = {
   },
 
   afterCreate(newlyInsertedRecord, next) {
-    Mensajero.findOne({id: newlyInsertedRecord.mensajero})
+    Mensajero.update({id: newlyInsertedRecord.mensajero}, {estado: 0})
       .exec((err, mensajero) => {
-        mensajero.estado = 0;
-        mensajero.save(err => {
-          // sails.sockets.broadcast
           next();
-        });
       });
   }
 };
