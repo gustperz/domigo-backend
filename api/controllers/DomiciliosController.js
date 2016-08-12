@@ -22,7 +22,7 @@ module.exports = {
         empresa: values.empresa,
         mensajero: values.mensajeros[0],
         cliente: cliente ? cliente.id : values.cliente,
-        fecha_hora_solicitud: moment()
+        fecha_hora_solicitud: moment().toDate()
       }).exec((err, domicilio) => {
         if (err) return res.negotiate(err);
         if(values.mensajeros.length > 1){
@@ -35,7 +35,7 @@ module.exports = {
               empresa: values.empresa,
               mensajero: values.mensajeros[i],
               cliente: domicilio.cliente.id,
-              fecha_hora_solicitud: moment()
+              fecha_hora_solicitud: moment().toDate()
             }).exec(()=>{});
           }
         }
