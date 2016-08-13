@@ -10,38 +10,39 @@ module.exports = {
 
   create(req, res) {
     var values = req.allParams();
-    values.cliente.direccion || (values.cliente.direccion = values.direccion_origen);
+
     if(values.mensajeros.length <= 0) res.badRequest('no se ha seleccionado ningun mensajero');
-    Cliente.findOne({telefono: values.cliente.telefono}).exec((err, cliente) => {
-      if(err) return res.negotiate(err);
-      Domicilio.create({
-        direccion_origen: values.direccion_origen,
-        direccion_destino: values.direccion_destino,
-        descripcion: values.descripcion,
-        tipo: values.tipo,
-        empresa: values.empresa,
-        mensajero: values.mensajeros[0],
-        cliente: cliente ? cliente.id : values.cliente,
-        fecha_hora_solicitud: moment().toDate()
-      }).exec((err, domicilio) => {
-        if (err) return res.negotiate(err);
-        if(values.mensajeros.length > 1){
-          for(var i = 1; i < values.mensajeros.length; i++){
-            Domicilio.create({
-              direccion_origen: values.direccion_origen,
-              direccion_destino: values.direccion_destino,
-              descripcion: values.descripcion,
-              tipo: values.tipo,
-              empresa: values.empresa,
-              mensajero: values.mensajeros[i],
-              cliente: domicilio.cliente.id,
-              fecha_hora_solicitud: moment().toDate()
-            }).exec(()=>{});
-          }
-        }
-        return res.ok(domicilio);
-      });
-    });
+
+    if(!values.cliente) res.badRequest('un domicilio sin cliente, en serio?');
+
+    if(!values.cliente.id) {
+      values.cliente.direccion = values.direccion_origen;
+      Cliente.create(values.cliente).exec((err, cliente) => {
+        if(err) return res.negotiate(err);
+
+        values.cliente.id = cliente;
+        createDomicilio();
+        return res.ok();
+      })
+    } else {
+      createDomicilio();
+      return res.ok();
+    }
+
+    function createDomicilio() {
+      for(var i = 0; i < values.mensajeros.length; i++) {
+        Domicilio.create({
+          direccion_origen: values.direccion_origen,
+          direccion_destino: values.direccion_destino,
+          descripcion: values.descripcion,
+          tipo: values.tipo,
+          empresa: values.empresa,
+          mensajero: values.mensajeros[i],
+          cliente: values.cliente.id,
+          fecha_hora_solicitud: moment().toDate()
+        }).exec(()=>{});
+      }
+    }
   }
 };
 
