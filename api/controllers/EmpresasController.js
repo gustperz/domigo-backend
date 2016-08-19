@@ -142,17 +142,19 @@ module.exports = {
 };
 
 function limitFecha(req){
-  var fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')+' 23:59:59') : moment();
+  var fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')) : moment();
   if (req.param('fecha_desde')) {
     var fecha_desde = moment(req.param('fecha_desde'));
   } else {
     var fecha_desde = moment().date(1);
   }
+  fecha_desde.set('hour', 0).set('minute', 0).set('second', 0);
+  fecha_hasta.add(1, 'd');
   console.log(fecha_hasta.toDate(),'**************');
   console.log(fecha_desde.toDate(),'**************');
   return {
-    '>': fecha_desde.subtract(1, 'd').toDate(),
-    '<': fecha_hasta.add(1, 'd').toDate()
+    '>': fecha_desde.toDate(),
+    '<': fecha_hasta.toDate()
   }
 }
 
