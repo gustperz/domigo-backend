@@ -75,7 +75,8 @@ const _onLocalStrategyAuth = (req, username, password, next) => {
           if(!empresa.activa)  return next(null, null, error_user_inactive);
           user.empresa = {
             id: empresa.id,
-            nombre: empresa.nombre
+            nombre: empresa.nombre,
+            logo: empresa.logo,
           };
           return next(null, user, {});
         });
