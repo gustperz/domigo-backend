@@ -104,7 +104,7 @@ module.exports = {
     Domicilio.find({
       where: {
         empresa: req.params.parentid,
-        fecha_hora_solicitud: limitFecha(req)
+        fecha_hora_solicitud: limitFecha(req, true)
       },
       sort: 'fecha_hora_solicitud DESC'
     }).populate('mensajero').populate('cliente').populate('tipo')
@@ -166,12 +166,13 @@ module.exports = {
 
 };
 
-function limitFecha(req){
+function limitFecha(req, default_dia){
   var fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')) : moment();
   if (req.param('fecha_desde')) {
     var fecha_desde = moment(req.param('fecha_desde'));
   } else {
-    var fecha_desde = moment().date(1);
+    default_dia || (default_dia = false);
+    var fecha_desde = default_dia ? moment() : moment().date(1);
   }
   fecha_desde.set('hour', 0).set('minute', 0).set('second', 0);
   fecha_hasta.add(1, 'd');
@@ -183,3 +184,4 @@ function limitFecha(req){
   }
 }
 
+sails
