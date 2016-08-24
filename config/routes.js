@@ -41,6 +41,7 @@ module.exports.routes = {
 
   'get    /empresas': 'EmpresasController.find',
   'post   /empresas': 'EmpresasController.create',
+  'post   /empresas/:id/logo': 'EmpresasController.saveLogo',
   'get    /empresas/:id': 'EmpresasController.findOne',
   'put    /empresas/:id': 'EmpresasController.update',
   'put    /empresas/:id/estado': 'EmpresasController.updateEstado',
