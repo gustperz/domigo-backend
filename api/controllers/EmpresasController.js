@@ -6,6 +6,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var moment = require('moment');
+const uid = require('sails/node_modules/uid-safe')
 
 module.exports = {
 
@@ -103,7 +104,7 @@ module.exports = {
     Domicilio.find({
       where: {
         empresa: req.params.parentid,
-        fecha_hora_solicitud: limitFecha(req)
+        fecha_hora_solicitud: limitFecha(req, true)
       },
       sort: 'fecha_hora_solicitud DESC'
     }).populate('mensajero').populate('cliente').populate('tipo')
@@ -137,22 +138,50 @@ module.exports = {
     if (!req.isSocket) return res.badRequest();
     sails.sockets.join(req, req.params.parentid);
     return res.ok();
+  },
+
+  saveLogo(req, res){
+    Empresa.findOne({id: req.params.id})
+        .then((empresa) => {
+          if(empresa){
+            req.file('logo').upload({
+                  dirname: sails.config.appPath + '/public/images/empresas',
+                  saveAs: function (__newFileStream, cb) {
+                    cb(null, empresa.logo || uid.sync(18) + empresa.id +'.'+ _.last(__newFileStream.filename.split('.')));
+                  }
+                },
+                (error, uploadedFiles) => {
+                  if (error) return res.negotiate(error);
+                  if(!uploadedFiles[0]) return res.badRequest('ha ocurrido un erro inesperado al almacenar la imagen');
+                  const filename = _.last(uploadedFiles[0].fd.split('/'));
+                  empresa.logo = filename;
+                  empresa.save((err, s) => res.ok('files upload'));
+                }
+            );
+          } else {
+            return res.notFound('la empresa no existe');
+          }
+        }).catch(res.negotiate);
   }
 
 };
 
-function limitFecha(req){
-  var fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')+' 23:59:59') : moment();
+function limitFecha(req, default_dia){
+  var fecha_hasta = req.param('fecha_hasta') ? moment(req.param('fecha_hasta')) : moment();
   if (req.param('fecha_desde')) {
     var fecha_desde = moment(req.param('fecha_desde'));
   } else {
-    var fecha_desde = moment().date(1);
+    default_dia || (default_dia = false);
+    var fecha_desde = default_dia ? moment() : moment().date(1);
   }
+  fecha_desde.set('hour', 0).set('minute', 0).set('second', 0);
+  fecha_hasta.add(1, 'd');
   console.log(fecha_hasta.toDate(),'**************');
   console.log(fecha_desde.toDate(),'**************');
   return {
-    '>': fecha_desde.subtract(1, 'd').toDate(),
-    '<': fecha_hasta.add(1, 'd').toDate()
+    '>': fecha_desde.toDate(),
+    '<': fecha_hasta.toDate()
   }
 }
 
+sails
