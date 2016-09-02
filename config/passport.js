@@ -80,6 +80,21 @@ const _onLocalStrategyAuth = (req, username, password, next) => {
           };
           return next(null, user, {});
         });
+      } else if (user.rol == 'MENSAJERO') {
+          Mensajero.findOne({usuario: user.id}).exec((err, mensajero) => {
+              if (err || !mensajero) return next(null, null, error_user_not_valid);
+              if (!mensajero.enlista_negra)  return next(null, null, error_user_inactive);
+              user.mensajero = {
+                  id: mensajero.id,
+                  cedula: mensajero.cedula,
+                  nombre: mensajero.nombre,
+                  apellidos: mensajero.apellidos,
+                  fotografia: mensajero.fotografia,
+                  telefono: mensajero.telefono,
+                  email: mensajero.email,
+              };
+              return next(null, user, {});
+          });
       } else {
         return next(null, user, {});
       }
