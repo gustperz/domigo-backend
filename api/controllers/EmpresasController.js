@@ -112,6 +112,7 @@ module.exports = {
       if(err) return res.negotiate(err);
       return res.ok(domicilios.map(domiclio => {
           return {
+            id: domiclio.id,
             fecha: domiclio.fecha_hora_solicitud,
             estado: domiclio.estado,
             direccion_destino: domiclio.direccion_destino,
