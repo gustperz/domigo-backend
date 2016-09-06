@@ -82,7 +82,8 @@ module.exports.routes = {
   'get  /clientes/:parentid/direcciones_frecuentes': 'ClientesController.direccionesFrecuentes',
   'get  /clientes': 'ClientesController.findOneByTelefono',
 
-  'post /domicilios': 'DomiciliosController.create',
+  'post   /domicilios': 'DomiciliosController.create',
+  'delete /domicilios/:id': 'DomiciliosController.destroy',
 
   'get    /lista_negra': 'ListaNegraController.find',
   'post   /lista_negra': 'ListaNegraController.create',
