@@ -183,5 +183,3 @@ function limitFecha(req, default_dia){
     '<': fecha_hasta.toDate()
   }
 }
-
-sails

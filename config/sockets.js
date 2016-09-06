@@ -108,7 +108,6 @@ module.exports.sockets = {
   ***************************************************************************/
   beforeConnect: function(handshake, cb) {
     // `true` allows the connection
-    console.log('sdfgh');
     return cb(null, true);
 
     // (`false` would reject the connection)

@@ -29,7 +29,12 @@ module.exports = {
             empresa.save();
           });
         res.created(newMensajero);
-      }).catch(res.negotiate);
+      }).catch(error =>{
+        if(!error.invalidAttributes.username && data.usuario.username) {
+          Usuario.destroy({username: data.usuario.username}).exec(() => {});
+        }
+        res.negotiate(error);
+      });
   },
 
   actualize(req, res){
