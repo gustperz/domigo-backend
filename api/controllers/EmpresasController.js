@@ -176,11 +176,11 @@ function limitFecha(req, default_dia){
     var fecha_desde = default_dia ? moment() : moment().date(1);
   }
   fecha_desde.set('hour', 0).set('minute', 0).set('second', 0);
-  fecha_hasta.add(1, 'd');
+  // fecha_hasta.add(0, 'd');
   console.log(fecha_hasta.toDate(),'**************');
   console.log(fecha_desde.toDate(),'**************');
   return {
-    '>': fecha_desde.toDate(),
-    '<': fecha_hasta.toDate()
+    '>=': fecha_desde.toDate(),
+    '<=': fecha_hasta.toDate()
   }
 }
