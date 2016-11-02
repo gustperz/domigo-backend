@@ -67,7 +67,7 @@ module.exports.routes = {
   'put    /mensajeros/:id': 'MensajerosController.update',
   'put    /mensajeros/:id/estado': 'MensajerosController.actualize',
   'put    /mensajeros/:id/condicion': 'MensajerosController.actualize',
-  'delete /mensajeros/:id': 'MensajerosController.destroy',
+  // 'delete /mensajeros/:id': 'MensajerosController.destroy',
   'post   /mensajeros/:id/fotografia': 'MensajerosController.saveImagen',
   'get    /mensajeros/:parentid/pagos': {controller: 'MensajerosController', action: 'populate', alias: 'pagos'},
   'post   /mensajeros/:parentid/pagos': 'MensajerosController.addPago',
