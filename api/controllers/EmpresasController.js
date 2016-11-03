@@ -67,7 +67,7 @@ module.exports = {
                     }
                   } else {
                     return {
-                      nombre: 'eliminado',
+                      nombre: 'Fuera de servicio'
                     }
                   }
                 })
@@ -93,7 +93,10 @@ module.exports = {
         var data = {
           fecha: pago.fecha,
           valor: pago.valor,
-          concepto: pago.concepto
+          concepto: pago.concepto,
+          mensajero: {
+            nombre: 'Fuera de servicio'
+          },
         }
         if(pago.mensajero){
           data.mensajero = {
@@ -127,7 +130,9 @@ module.exports = {
           direccion_destino: domiclio.direccion_destino,
           direccion_origen: domiclio.direccion_origen,
           tipo: domiclio.tipo,
-          mensajero: {},
+          mensajero: {
+            nombre: 'Fuera de servicio'
+          },
           cliente: {
             id: domiclio.cliente.id,
             nombre: domiclio.cliente.nombre,
