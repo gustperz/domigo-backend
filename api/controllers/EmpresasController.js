@@ -57,12 +57,18 @@ module.exports = {
                 total_mes: total_mes || 0,
                 total_semana: total_semana || 0,
                 mensajeros: pagos.map(pago => {
-                  return {
-                    id: pago.mensajero.id,
-                    nombre: pago.mensajero.nombre,
-                    apellidos: pago.mensajero.apellidos,
-                    fotografia: pago.mensajero.fotografia,
-                    cedula: pago.mensajero.cedula
+                  if(pago.mensajero) {
+                    return {
+                      id: pago.mensajero.id,
+                      nombre: pago.mensajero.nombre,
+                      apellidos: pago.mensajero.apellidos,
+                      fotografia: pago.mensajero.fotografia,
+                      cedula: pago.mensajero.cedula
+                    }
+                  } else {
+                    return {
+                      nombre: 'eliminado',
+                    }
                   }
                 })
               });
@@ -84,18 +90,21 @@ module.exports = {
     }).populate('mensajero').populate('concepto').exec((err, pagos) => {
       if(err) return res.negotiate(err);
       return res.ok(pagos.map(pago => {
-          return {
-            fecha: pago.fecha,
-            valor: pago.valor,
-            concepto: pago.concepto,
-            mensajero: {
-              id: pago.mensajero.id,
-              nombre: pago.mensajero.nombre,
-              apellidos: pago.mensajero.apellidos,
-              fotografia: pago.mensajero.fotografia,
-              cedula: pago.mensajero.cedula
-            }
+        var data = {
+          fecha: pago.fecha,
+          valor: pago.valor,
+          concepto: pago.concepto
+        }
+        if(pago.mensajero){
+          data.mensajero = {
+            id: pago.mensajero.id,
+            nombre: pago.mensajero.nombre,
+            apellidos: pago.mensajero.apellidos,
+            fotografia: pago.mensajero.fotografia,
+            cedula: pago.mensajero.cedula
           }
+        }
+        return data;
         }));
     });
   },
@@ -111,27 +120,31 @@ module.exports = {
       .exec((err, domicilios) => {
       if(err) return res.negotiate(err);
       return res.ok(domicilios.map(domiclio => {
-          return {
-            id: domiclio.id,
-            fecha: domiclio.fecha_hora_solicitud,
-            estado: domiclio.estado,
-            direccion_destino: domiclio.direccion_destino,
-            direccion_origen: domiclio.direccion_origen,
-            tipo: domiclio.tipo,
-            mensajero: {
-              id: domiclio.mensajero.id,
-              nombre: domiclio.mensajero.nombre,
-              apellidos: domiclio.mensajero.apellidos,
-              telefono: domiclio.mensajero.telefono,
-            },
-            cliente: {
-              id: domiclio.cliente.id,
-              nombre: domiclio.cliente.nombre,
-              tipo: domiclio.cliente.tipo,
-              telefono: domiclio.cliente.telefono,
-            }
+        var data = {
+          id: domiclio.id,
+          fecha: domiclio.fecha_hora_solicitud,
+          estado: domiclio.estado,
+          direccion_destino: domiclio.direccion_destino,
+          direccion_origen: domiclio.direccion_origen,
+          tipo: domiclio.tipo,
+          mensajero: {},
+          cliente: {
+            id: domiclio.cliente.id,
+            nombre: domiclio.cliente.nombre,
+            tipo: domiclio.cliente.tipo,
+            telefono: domiclio.cliente.telefono,
           }
-        }));
+        }
+        if(domiclio.mensajero){
+          data.mensajero = {
+            id: domiclio.mensajero.id,
+            nombre: domiclio.mensajero.nombre,
+            apellidos: domiclio.mensajero.apellidos,
+            telefono: domiclio.mensajero.telefono,
+          }
+        }
+        return data;
+      }));
     });
   },
 
@@ -176,11 +189,12 @@ function limitFecha(req, default_dia){
     var fecha_desde = default_dia ? moment() : moment().date(1);
   }
   fecha_desde.set('hour', 0).set('minute', 0).set('second', 0);
+  fecha_hasta.set('hour', 0).set('minute', 0).set('second', 0);
   fecha_hasta.add(1, 'd');
   console.log(fecha_hasta.toDate(),'**************');
   console.log(fecha_desde.toDate(),'**************');
   return {
     '>=': fecha_desde.toDate(),
-    '<=': fecha_hasta.toDate()
+    '<': fecha_hasta.toDate()
   }
 }
